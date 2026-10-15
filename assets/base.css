@@ -208,15 +208,17 @@ p { margin: 0 0 1em; }
   .header-wrapper--framed .header { min-height: 72px; }
 }
 
-/* Overlay: when the page opens with a hero, the header floats over it (translucent until scrolled) */
-body:has(#MainContent > .section-hero:first-child) .section-header:has(> .header-wrapper--overlay) { margin-bottom: calc(-1 * var(--header-height, 72px)); }
-body:has(#MainContent > .section-hero:first-child) #MainContent > .section-hero:first-child .hero__content { padding-top: calc(var(--header-height, 72px) + 56px); }
-body:has(#MainContent > .section-hero:first-child) .header-wrapper--overlay:not(.is-scrolled) .header-bar::before {
+/* Overlay: when the page opens on a dark band (hero, or a dark page title on collection / blog),
+   the header floats over it (translucent until scrolled) instead of sitting on a white strip */
+body:has(#MainContent > .section-hero:first-child, #MainContent > .shopify-section:first-child > .page-header--dark:first-child) .section-header:has(> .header-wrapper--overlay) { margin-bottom: calc(-1 * var(--header-height, 72px)); }
+body:has(#MainContent > .section-hero:first-child, #MainContent > .shopify-section:first-child > .page-header--dark:first-child) .section-header:has(> .header-wrapper--overlay) ~ #MainContent > .section-hero:first-child .hero__content,
+body:has(#MainContent > .section-hero:first-child, #MainContent > .shopify-section:first-child > .page-header--dark:first-child) .section-header:has(> .header-wrapper--overlay) ~ #MainContent > .shopify-section:first-child > .page-header--dark:first-child { padding-top: calc(var(--header-height, 72px) + 56px); }
+body:has(#MainContent > .section-hero:first-child, #MainContent > .shopify-section:first-child > .page-header--dark:first-child) .header-wrapper--overlay:not(.is-scrolled) .header-bar::before {
   backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px);
 }
-body:has(#MainContent > .section-hero:first-child) .header-wrapper--overlay.scheme-dark:not(.is-scrolled) .header-bar::before { background: rgba(var(--color-dark-rgb), .5); box-shadow: inset 0 0 0 1px rgba(255,255,255,.1); }
-body:has(#MainContent > .section-hero:first-child) .header-wrapper--overlay.scheme-light:not(.is-scrolled) .header-bar::before { background: rgba(255,255,255,.75); }
-body:has(#MainContent > .section-hero:first-child) .header-wrapper--overlay.header-wrapper--full:not(.is-scrolled) .header-bar::before { box-shadow: none; }
+body:has(#MainContent > .section-hero:first-child, #MainContent > .shopify-section:first-child > .page-header--dark:first-child) .header-wrapper--overlay.scheme-dark:not(.is-scrolled) .header-bar::before { background: rgba(var(--color-dark-rgb), .5); box-shadow: inset 0 0 0 1px rgba(255,255,255,.1); }
+body:has(#MainContent > .section-hero:first-child, #MainContent > .shopify-section:first-child > .page-header--dark:first-child) .header-wrapper--overlay.scheme-light:not(.is-scrolled) .header-bar::before { background: rgba(255,255,255,.75); }
+body:has(#MainContent > .section-hero:first-child, #MainContent > .shopify-section:first-child > .page-header--dark:first-child) .header-wrapper--overlay.header-wrapper--full:not(.is-scrolled) .header-bar::before { box-shadow: none; }
 
 .header { display: grid; grid-template-columns: auto 1fr auto; align-items: center; gap: 16px; min-height: 76px; }
 .logo { display: block; }

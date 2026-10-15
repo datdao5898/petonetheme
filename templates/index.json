@@ -142,7 +142,7 @@
         "b1": {
           "type": "bundle",
           "settings": {
-            "product": "",
+            "product": "may-cho-cho-meo-an-tu-dong-petwant-f14",
             "label": "Hands-free",
             "title": "The Complete Hands-Free Home",
             "includes": "Litter box + Fountain + Feeder",
@@ -152,7 +152,7 @@
         "b2": {
           "type": "bundle",
           "settings": {
-            "product": "",
+            "product": "bo-may-cho-an-loc-nuoc-petwant-fw1-w",
             "label": "Odor control",
             "title": "Zero Odor Combo",
             "includes": "Litter box + Air purifier",
@@ -162,7 +162,7 @@
         "b3": {
           "type": "bundle",
           "settings": {
-            "product": "",
+            "product": "may-loc-nuoc-cho-cho-meo-petwant-w8",
             "label": "Hydration",
             "title": "Fresh Water Set",
             "includes": "Litter box + Fountain",
@@ -172,7 +172,7 @@
         "b4": {
           "type": "bundle",
           "settings": {
-            "product": "",
+            "product": "may-loc-nuoc-khong-day-petwant-pwl-012",
             "label": "Starter",
             "title": "The Fresh Set",
             "includes": "Fountain + Filters",
@@ -206,28 +206,28 @@
           "type": "tab",
           "settings": {
             "label": "Best sellers",
-            "collection": ""
+            "collection": "automatic-pet-feeder"
           }
         },
         "c2": {
           "type": "tab",
           "settings": {
             "label": "Litter boxes",
-            "collection": ""
+            "collection": "automatic-pet-feeder"
           }
         },
         "c3": {
           "type": "tab",
           "settings": {
             "label": "Fountains",
-            "collection": ""
+            "collection": "automatic-pet-feeder"
           }
         },
         "c4": {
           "type": "tab",
           "settings": {
             "label": "Feeders",
-            "collection": ""
+            "collection": "automatic-pet-feeder"
           }
         }
       },

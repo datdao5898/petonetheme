@@ -282,6 +282,7 @@
         "p1": {
           "type": "panel",
           "settings": {
+            "image": "shopify://shop_images/sandra-beatrice-molnar-19AcrxQ7blg-unsplash.jpg",
             "video_url": "",
             "eyebrow": "Our story",
             "title": "Built for pets. Trusted by families.",
@@ -293,6 +294,7 @@
         "p2": {
           "type": "panel",
           "settings": {
+            "image": "shopify://shop_images/d-ng-ph-c-h-i-tri-u-4K4LuGXZnMs-unsplash.jpg",
             "video_url": "",
             "eyebrow": "Partner with us",
             "title": "Creators & media",

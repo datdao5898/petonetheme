@@ -72,5 +72,11 @@
   "password": {
     "enter": "Enter store using password",
     "submit": "Enter"
+  },
+  "sections": {
+    "hero": {
+      "label": "Featured promotions",
+      "go_to_slide": "Go to slide {{ number }}"
+    }
   }
 }

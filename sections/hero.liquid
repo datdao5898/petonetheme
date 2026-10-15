@@ -1,46 +1,105 @@
 {%- liquid
   assign s = section.settings
+  assign slide_count = section.blocks.size
 -%}
-<section class="hero hero--{{ s.height }} hero--align-{{ s.content_position }}" style="--overlay: {{ s.overlay | divided_by: 100.0 }};">
-  <div class="hero__media">
-    {%- if s.video != blank -%}
-      {{ s.video | video_tag: autoplay: true, loop: true, muted: true, playsinline: true, controls: false, class: 'hero__video', image_size: '1920x' }}
-    {%- elsif s.image != blank -%}
-      {%- assign desktop_class = 'hero__img' -%}
-      {%- if s.image_mobile != blank -%}
-        {%- assign desktop_class = 'hero__img hero__img--desktop' -%}
-        {{ s.image_mobile | image_url: width: 1100 | image_tag: class: 'hero__img hero__img--mobile', loading: 'eager', fetchpriority: 'high', widths: '550, 750, 1100', sizes: '100vw' }}
-      {%- endif -%}
-      {{ s.image | image_url: width: 2800 | image_tag: class: desktop_class, loading: 'eager', fetchpriority: 'high', widths: '750, 1100, 1500, 1920, 2400, 2800', sizes: '100vw' }}
-    {%- else -%}
-      <div class="hero__placeholder">{{ 'lifestyle-2' | placeholder_svg_tag: 'placeholder' }}</div>
+<hero-slider
+  class="hero hero--{{ s.height }}{% if slide_count > 1 %} hero--has-controls{% endif %}"
+  style="--overlay: {{ s.overlay | divided_by: 100.0 }}; --slide-speed: {{ s.autoplay_speed }}s;"
+  {% if s.autoplay and slide_count > 1 %}data-autoplay{% endif %}
+  data-speed="{{ s.autoplay_speed }}"
+  role="region"
+  aria-roledescription="carousel"
+  aria-label="{{ 'sections.hero.label' | t }}"
+>
+  <div class="hero__slides" aria-live="{% if s.autoplay %}off{% else %}polite{% endif %}">
+    {%- for block in section.blocks -%}
+      {%- liquid
+        assign b = block.settings
+        if forloop.first
+          assign img_loading = 'eager'
+          assign img_priority = 'high'
+        else
+          assign img_loading = 'lazy'
+          assign img_priority = 'auto'
+        endif
+      -%}
+      <div
+        class="hero__slide hero--align-{{ b.content_position }}{% if forloop.first %} is-active{% endif %}"
+        id="Slide-{{ section.id }}-{{ forloop.index }}"
+        role="group"
+        aria-roledescription="slide"
+        aria-label="{{ forloop.index }} / {{ slide_count }}"
+        {% unless forloop.first %}aria-hidden="true" inert{% endunless %}
+        data-slide
+        {{ block.shopify_attributes }}
+      >
+        <div class="hero__media">
+          {%- if b.video != blank -%}
+            {{ b.video | video_tag: autoplay: forloop.first, loop: true, muted: true, playsinline: true, controls: false, class: 'hero__video', image_size: '1920x' }}
+          {%- elsif b.image != blank -%}
+            {%- assign desktop_class = 'hero__img' -%}
+            {%- if b.image_mobile != blank -%}
+              {%- assign desktop_class = 'hero__img hero__img--desktop' -%}
+              {{ b.image_mobile | image_url: width: 1100 | image_tag: class: 'hero__img hero__img--mobile', loading: img_loading, fetchpriority: img_priority, widths: '550, 750, 1100', sizes: '100vw' }}
+            {%- endif -%}
+            {{ b.image | image_url: width: 2800 | image_tag: class: desktop_class, loading: img_loading, fetchpriority: img_priority, widths: '750, 1100, 1500, 1920, 2400, 2800', sizes: '100vw' }}
+          {%- else -%}
+            <div class="hero__placeholder">{{ 'lifestyle-2' | placeholder_svg_tag: 'placeholder' }}</div>
+          {%- endif -%}
+        </div>
+
+        <div class="hero__content page-width">
+          <div class="hero__text">
+            {%- if b.eyebrow != blank -%}
+              <p class="eyebrow">{% render 'icon', icon: 'paw' %} {{ b.eyebrow | escape }}</p>
+            {%- endif -%}
+            {%- if b.heading != blank -%}
+              {%- if forloop.first -%}
+                <h1 class="hero__heading h-display">{{ b.heading }}</h1>
+              {%- else -%}
+                <h2 class="hero__heading h-display">{{ b.heading }}</h2>
+              {%- endif -%}
+            {%- endif -%}
+            {%- if b.subheading != blank -%}
+              <p class="hero__sub">{{ b.subheading }}</p>
+            {%- endif -%}
+            {%- if b.button_label != blank or b.button2_label != blank -%}
+              <div class="button-row">
+                {%- if b.button_label != blank -%}
+                  <a href="{{ b.button_link }}" class="button button--large">{{ b.button_label | escape }} {% render 'icon', icon: 'arrow-right' %}</a>
+                {%- endif -%}
+                {%- if b.button2_label != blank -%}
+                  <a href="{{ b.button2_link }}" class="button button--large button--ghost">{{ b.button2_label | escape }}</a>
+                {%- endif -%}
+              </div>
+            {%- endif -%}
+          </div>
+        </div>
+      </div>
+    {%- endfor -%}
+
+    {%- if slide_count > 1 -%}
+      <div class="hero__controls">
+        <button type="button" class="hero__arrow" data-slide-prev aria-label="{{ 'general.previous' | t }}">{% render 'icon', icon: 'chevron-left' %}</button>
+        <div class="hero__dots">
+          {%- for block in section.blocks -%}
+            <button
+              type="button"
+              class="hero__dot{% if forloop.first %} is-active{% endif %}"
+              data-slide-to="{{ forloop.index0 }}"
+              aria-controls="Slide-{{ section.id }}-{{ forloop.index }}"
+              aria-label="{{ 'sections.hero.go_to_slide' | t: number: forloop.index }}"
+              {% if forloop.first %}aria-current="true"{% endif %}
+            ><span></span></button>
+          {%- endfor -%}
+        </div>
+        <button type="button" class="hero__arrow" data-slide-next aria-label="{{ 'general.next' | t }}">{% render 'icon', icon: 'chevron-right' %}</button>
+      </div>
     {%- endif -%}
   </div>
 
-  <div class="hero__content page-width">
-    <div class="hero__text">
-      {%- if s.eyebrow != blank -%}
-        <p class="eyebrow">{% render 'icon', icon: 'paw' %} {{ s.eyebrow | escape }}</p>
-      {%- endif -%}
-      {%- if s.heading != blank -%}
-        <h1 class="hero__heading h-display">{{ s.heading }}</h1>
-      {%- endif -%}
-      {%- if s.subheading != blank -%}
-        <p class="hero__sub">{{ s.subheading }}</p>
-      {%- endif -%}
-      {%- if s.button_label != blank or s.button2_label != blank -%}
-        <div class="button-row">
-          {%- if s.button_label != blank -%}
-            <a href="{{ s.button_link }}" class="button button--large">{{ s.button_label | escape }} {% render 'icon', icon: 'arrow-right' %}</a>
-          {%- endif -%}
-          {%- if s.button2_label != blank -%}
-            <a href="{{ s.button2_link }}" class="button button--large button--ghost">{{ s.button2_label | escape }}</a>
-          {%- endif -%}
-        </div>
-      {%- endif -%}
-    </div>
-
-    {%- if s.promo_show -%}
+  {%- if s.promo_show -%}
+    <div class="hero__extras page-width">
       <div class="hero__promo">
         {%- if s.promo_label != blank -%}<span class="badge badge--accent">{{ s.promo_label | escape }}</span>{%- endif -%}
         {%- if s.promo_heading != blank -%}<p class="hero__promo-heading">{{ s.promo_heading }}</p>{%- endif -%}
@@ -49,18 +108,16 @@
           <a href="{{ s.promo_button_link }}" class="hero__promo-link">{{ s.promo_button_label | escape }} {% render 'icon', icon: 'arrow-right' %}</a>
         {%- endif -%}
       </div>
-    {%- endif -%}
-  </div>
-</section>
+    </div>
+  {%- endif -%}
+</hero-slider>
 
 {% schema %}
 {
-  "name": "Hero banner",
+  "name": "Hero slideshow",
   "class": "section-hero",
+  "max_blocks": 6,
   "settings": [
-    { "type": "image_picker", "id": "image", "label": "Image", "info": "2800 x 1400px recommended" },
-    { "type": "image_picker", "id": "image_mobile", "label": "Mobile image", "info": "Optional. 1100 x 1400px recommended" },
-    { "type": "video", "id": "video", "label": "Background video", "info": "Optional. Replaces the image when set." },
     {
       "type": "select",
       "id": "height",
@@ -72,26 +129,11 @@
       ],
       "default": "large"
     },
-    {
-      "type": "select",
-      "id": "content_position",
-      "label": "Text position",
-      "options": [
-        { "value": "left", "label": "Left" },
-        { "value": "center", "label": "Center" }
-      ],
-      "default": "left"
-    },
     { "type": "range", "id": "overlay", "label": "Image darkness", "min": 0, "max": 80, "step": 5, "unit": "%", "default": 35 },
-    { "type": "header", "content": "Text" },
-    { "type": "text", "id": "eyebrow", "label": "Eyebrow", "default": "Smart pet tech for modern homes" },
-    { "type": "inline_richtext", "id": "heading", "label": "Heading", "default": "Smarter care. <em>Happier pets.</em>" },
-    { "type": "inline_richtext", "id": "subheading", "label": "Subheading", "default": "Self-cleaning litter boxes, smart fountains and feeders that take care of the daily chores — so you can enjoy more time with your pet." },
-    { "type": "text", "id": "button_label", "label": "Button label", "default": "Shop the sale" },
-    { "type": "url", "id": "button_link", "label": "Button link", "default": "/collections/all" },
-    { "type": "text", "id": "button2_label", "label": "Second button label", "default": "Why Petone" },
-    { "type": "url", "id": "button2_link", "label": "Second button link" },
-    { "type": "header", "content": "Promo card" },
+    { "type": "header", "content": "Slideshow" },
+    { "type": "checkbox", "id": "autoplay", "label": "Auto-rotate slides", "default": true },
+    { "type": "range", "id": "autoplay_speed", "label": "Change slides every", "min": 3, "max": 10, "step": 1, "unit": "s", "default": 6 },
+    { "type": "header", "content": "Promo card", "info": "Stays visible on every slide." },
     { "type": "checkbox", "id": "promo_show", "label": "Show promo card", "default": true },
     { "type": "text", "id": "promo_label", "label": "Label", "default": "Fall Sale" },
     { "type": "inline_richtext", "id": "promo_heading", "label": "Heading", "default": "Settle into fall. Keep it fresh." },
@@ -99,6 +141,51 @@
     { "type": "text", "id": "promo_button_label", "label": "Link label", "default": "Shop bundles" },
     { "type": "url", "id": "promo_button_link", "label": "Link" }
   ],
-  "presets": [{ "name": "Hero banner" }]
+  "blocks": [
+    {
+      "type": "slide",
+      "name": "Slide",
+      "settings": [
+        { "type": "image_picker", "id": "image", "label": "Image", "info": "2800 x 1400px recommended" },
+        { "type": "image_picker", "id": "image_mobile", "label": "Mobile image", "info": "Optional. 1100 x 1400px recommended" },
+        { "type": "video", "id": "video", "label": "Background video", "info": "Optional. Replaces the image when set." },
+        {
+          "type": "select",
+          "id": "content_position",
+          "label": "Text position",
+          "options": [
+            { "value": "left", "label": "Left" },
+            { "value": "center", "label": "Center" }
+          ],
+          "default": "left"
+        },
+        { "type": "text", "id": "eyebrow", "label": "Eyebrow", "default": "Smart pet tech for modern homes" },
+        { "type": "inline_richtext", "id": "heading", "label": "Heading", "default": "Smarter care. <em>Happier pets.</em>" },
+        { "type": "inline_richtext", "id": "subheading", "label": "Subheading", "default": "Self-cleaning litter boxes, smart fountains and feeders that take care of the daily chores — so you can enjoy more time with your pet." },
+        { "type": "text", "id": "button_label", "label": "Button label", "default": "Shop the sale" },
+        { "type": "url", "id": "button_link", "label": "Button link", "default": "/collections/all" },
+        { "type": "text", "id": "button2_label", "label": "Second button label", "default": "Why Petone" },
+        { "type": "url", "id": "button2_link", "label": "Second button link" }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Hero slideshow",
+      "blocks": [
+        { "type": "slide" },
+        {
+          "type": "slide",
+          "settings": {
+            "eyebrow": "Self-cleaning litter box",
+            "heading": "Scoop-free. <em>Odor-free.</em>",
+            "subheading": "Automatic cleaning, sealed waste drawer and app alerts — fresh every day without lifting a finger.",
+            "button_label": "Shop litter boxes",
+            "button2_label": ""
+          }
+        }
+      ]
+    }
+  ]
 }
 {% endschema %}

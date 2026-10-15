@@ -74,6 +74,27 @@ trust = [('trial','30-day trial','Risk-free returns'),('shipping','Free shipping
 thtml = ''.join(f'<li class="trust-item"><span class="trust-item__icon">{icon(i)}</span><span><strong class="trust-item__title">{a}</strong><span class="trust-item__text">{b}</span></span></li>' for i,a,b in trust)
 social = ''.join(f'<li><a href="#">{icon(s)}</a></li>' for s in ['facebook','instagram','tiktok','youtube'])
 
+# Hero slideshow (mirror of sections/hero.liquid)
+hero_slides = [
+  ('left', 'Smart pet tech for modern homes', 'Smarter care. <em>Happier pets.</em>', 'Self-cleaning litter boxes, smart fountains and feeders that take care of the daily chores — so you can enjoy more time with your pet.', 'Shop the sale', 'Why Petone'),
+  ('left', 'Self-cleaning litter box', 'Scoop-free. <em>Odor-free.</em>', 'Automatic cleaning, sealed waste drawer and app alerts — fresh every day without lifting a finger.', 'Shop litter boxes', ''),
+  ('center', 'Smart fountains', 'Fresh water, <em>all day.</em>', 'Quiet pumps and triple filtration keep your pet hydrated and healthy.', 'Shop fountains', 'Learn more'),
+]
+def _slide(i, s):
+    pos, eb, h, sub, b1, b2 = s
+    tag = 'h1' if i == 0 else 'h2'
+    btn2 = f'<a href="#" class="button button--large button--ghost">{b2}</a>' if b2 else ''
+    attrs = ' is-active"' if i == 0 else '" aria-hidden="true" inert'
+    return (f'<div class="hero__slide hero--align-{pos}{attrs} role="group" aria-roledescription="slide" data-slide><div class="hero__media">{hero_bg}</div>'
+            f'<div class="hero__content page-width"><div class="hero__text"><p class="eyebrow">{icon("paw")} {eb}</p><{tag} class="hero__heading h-display">{h}</{tag}><p class="hero__sub">{sub}</p>'
+            f'<div class="button-row"><a href="#" class="button button--large">{b1} {icon("arrow-right")}</a>{btn2}</div></div></div></div>')
+hero_dots = ''.join(f'<button type="button" class="hero__dot{" is-active" if i == 0 else ""}" data-slide-to="{i}"><span></span></button>' for i in range(len(hero_slides)))
+hero_html = ('<hero-slider class="hero hero--large hero--has-controls" style="--overlay:.35;--slide-speed:6s" data-autoplay data-speed="6" role="region" aria-roledescription="carousel">'
+  '<div class="hero__slides">' + ''.join(_slide(i, s) for i, s in enumerate(hero_slides)) +
+  f'<div class="hero__controls"><button type="button" class="hero__arrow" data-slide-prev>{icon("chevron-left")}</button><div class="hero__dots">{hero_dots}</div><button type="button" class="hero__arrow" data-slide-next>{icon("chevron-right")}</button></div></div>'
+  f'<div class="hero__extras page-width"><div class="hero__promo"><span class="badge badge--accent">Fall Sale</span><p class="hero__promo-heading">Settle into fall. Keep it fresh.</p><p class="hero__promo-amount">Save up to $400</p><a href="#" class="hero__promo-link">Shop bundles {icon("arrow-right")}</a></div></div>'
+  '</hero-slider>')
+
 html = f'''<!doctype html><html class="no-js" lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Petone — preview</title>
 <style>:root{{--color-dark:#060709;--color-dark-rgb:6,7,9;--color-accent:#53BD8E;--color-accent-rgb:83,189,142;--color-accent-hover:#3FA578;--color-bg:#fff;--color-surface:#F2F5F3;--color-text:#060709;--color-text-rgb:6,7,9;--color-sale:#53BD8E;--font-heading:Poppins,sans-serif;--font-heading-weight:700;--font-body:Poppins,sans-serif;--font-body-weight:400;--font-body-weight-bold:700;--heading-scale:1;--page-width:1360px;--radius:20px;--radius-btn:40px;--logo-width:130px}}
 {css}</style>
@@ -87,10 +108,7 @@ html = f'''<!doctype html><html class="no-js" lang="en"><head><meta charset="utf
 <a href="#" class="header__icon">{icon("account")}</a><a href="#" class="header__icon header__icon--cart">{icon("cart")}<span class="cart-count" data-cart-count>2</span></a><a href="#" class="button button--small header__cta">Shop the sale</a></div>
 </header></div></sticky-header></div>
 <main id="MainContent">
-<div class="shopify-section section-hero"><section class="hero hero--large hero--align-left" style="--overlay:.35"><div class="hero__media">{hero_bg}</div>
-<div class="hero__content page-width"><div class="hero__text"><p class="eyebrow">{icon("paw")} Smart pet tech for modern homes</p><h1 class="hero__heading h-display">Smarter care. <em>Happier pets.</em></h1><p class="hero__sub">Self-cleaning litter boxes, smart fountains and feeders that take care of the daily chores — so you can enjoy more time with your pet.</p>
-<div class="button-row"><a href="#" class="button button--large">Shop the sale {icon("arrow-right")}</a><a href="#" class="button button--large button--ghost">Why Petone</a></div></div>
-<div class="hero__promo"><span class="badge badge--accent">Fall Sale</span><p class="hero__promo-heading">Settle into fall. Keep it fresh.</p><p class="hero__promo-amount">Save up to $400</p><a href="#" class="hero__promo-link">Shop bundles {icon("arrow-right")}</a></div></div></section></div>
+<div class="shopify-section section-hero">{hero_html}</div>
 <section class="section trust-bar bg-white" style="--pt:28px;--pb:28px"><div class="page-width"><ul class="trust-bar__list" role="list">{thtml}</ul></div></section>
 <section class="section bundles bg-white" style="--pt:80px;--pb:80px"><div class="page-width"><div class="section-head"><div><p class="eyebrow">Bundle &amp; save</p><h2 class="h1">Choose your pet care bundle</h2><p class="section-head__text">Hand-picked combos that work better together — and cost less.</p></div><a href="#" class="link-arrow">View all bundles {icon("arrow-right")}</a></div>
 <div class="bundles__grid scroller" style="--cols:4">{bhtml}</div></div></section>

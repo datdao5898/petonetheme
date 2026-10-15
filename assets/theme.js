@@ -110,6 +110,84 @@
   }
   if (!customElements.get('tabs-component')) customElements.define('tabs-component', TabsComponent);
 
+  /* ---------- Hero slideshow ---------- */
+  // Autoplay timing comes from the CSS progress animation on the active dot:
+  // its animationend advances the slide, so pausing the animation pauses the slideshow
+  // (and prefers-reduced-motion, which disables animations, disables autoplay).
+  class HeroSlider extends HTMLElement {
+    connectedCallback() {
+      this.slides = Array.from(this.querySelectorAll('[data-slide]'));
+      this.dots = Array.from(this.querySelectorAll('[data-slide-to]'));
+      this.index = Math.max(0, this.slides.findIndex((s) => s.classList.contains('is-active')));
+      if (this.slides.length < 2) return;
+
+      this.querySelector('[data-slide-prev]').addEventListener('click', () => this.go(this.index - 1));
+      this.querySelector('[data-slide-next]').addEventListener('click', () => this.go(this.index + 1));
+      this.dots.forEach((dot, i) => {
+        dot.addEventListener('click', () => this.go(i));
+        dot.addEventListener('animationend', () => this.go(this.index + 1));
+      });
+
+      // Pause while the visitor is interacting or the tab is hidden
+      this.holds = new Set();
+      const hold = (key, on) => { on ? this.holds.add(key) : this.holds.delete(key); this.classList.toggle('is-paused', this.holds.size > 0); };
+      this.addEventListener('mouseenter', () => hold('hover', true));
+      this.addEventListener('mouseleave', () => hold('hover', false));
+      // Only keyboard focus pauses — a mouse click on a dot shouldn't stop autoplay for good
+      this.addEventListener('focusin', (e) => { if (e.target.matches(':focus-visible')) hold('focus', true); });
+      this.addEventListener('focusout', (e) => { if (!this.contains(e.relatedTarget)) hold('focus', false); });
+      this.onVisibility = () => hold('hidden', document.hidden);
+      document.addEventListener('visibilitychange', this.onVisibility);
+
+      this.addEventListener('keydown', (e) => {
+        if (e.key === 'ArrowLeft') this.go(this.index - 1);
+        if (e.key === 'ArrowRight') this.go(this.index + 1);
+      });
+
+      // Swipe
+      let startX = null;
+      this.addEventListener('pointerdown', (e) => { if (e.pointerType !== 'mouse') startX = e.clientX; });
+      this.addEventListener('pointerup', (e) => {
+        if (startX === null) return;
+        const dx = e.clientX - startX;
+        startX = null;
+        if (Math.abs(dx) > 40) this.go(this.index + (dx < 0 ? 1 : -1));
+      });
+
+      // Theme editor: show the selected slide and stop rotating while editing it
+      this.addEventListener('shopify:block:select', (e) => {
+        const i = this.slides.indexOf(e.target);
+        if (i > -1) this.go(i);
+        hold('editor', true);
+      });
+      this.addEventListener('shopify:block:deselect', () => hold('editor', false));
+    }
+
+    disconnectedCallback() {
+      if (this.onVisibility) document.removeEventListener('visibilitychange', this.onVisibility);
+    }
+
+    go(i) {
+      const n = this.slides.length;
+      const next = ((i % n) + n) % n;
+      if (next === this.index) return;
+      this.slides.forEach((slide, j) => {
+        const active = j === next;
+        slide.classList.toggle('is-active', active);
+        slide.toggleAttribute('inert', !active);
+        slide.setAttribute('aria-hidden', active ? 'false' : 'true');
+        const video = slide.querySelector('video');
+        if (video) active ? video.play().catch(() => {}) : video.pause();
+      });
+      this.dots.forEach((dot, j) => {
+        dot.classList.toggle('is-active', j === next);
+        j === next ? dot.setAttribute('aria-current', 'true') : dot.removeAttribute('aria-current');
+      });
+      this.index = next;
+    }
+  }
+  if (!customElements.get('hero-slider')) customElements.define('hero-slider', HeroSlider);
+
   /* ---------- Cart helpers ---------- */
   const updateCartCount = (count) => {
     document.querySelectorAll('[data-cart-count]').forEach((el) => {

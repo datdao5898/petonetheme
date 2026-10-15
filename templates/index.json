@@ -11,24 +11,51 @@
   "sections": {
     "hero": {
       "type": "hero",
+      "blocks": {
+        "slide_1": {
+          "type": "slide",
+          "settings": {
+            "image": "shopify://shop_images/jun-ren-fIlSPl7k27s-unsplash.jpg",
+            "content_position": "left",
+            "eyebrow": "Smart pet tech for modern homes",
+            "heading": "Smarter care. <em>Happier pets.</em>",
+            "subheading": "Self-cleaning litter boxes, smart fountains and feeders that take care of the daily chores — so you can enjoy more time with your pet.",
+            "button_label": "Shop the sale",
+            "button_link": "shopify://collections/all",
+            "button2_label": "Why Petone",
+            "button2_link": ""
+          }
+        },
+        "slide_2": {
+          "type": "slide",
+          "settings": {
+            "image": "shopify://shop_images/jun-ren-fIlSPl7k27s-unsplash.jpg",
+            "content_position": "left",
+            "eyebrow": "Self-cleaning litter box",
+            "heading": "Scoop-free. <em>Odor-free.</em>",
+            "subheading": "Automatic cleaning, sealed waste drawer and app alerts — fresh every day without lifting a finger.",
+            "button_label": "Shop litter boxes",
+            "button_link": "shopify://collections/all",
+            "button2_label": "",
+            "button2_link": ""
+          }
+        }
+      },
+      "block_order": [
+        "slide_1",
+        "slide_2"
+      ],
       "settings": {
-        "image": "shopify://shop_images/jun-ren-fIlSPl7k27s-unsplash.jpg",
         "height": "large",
-        "content_position": "left",
         "overlay": 35,
-        "eyebrow": "Smart pet tech for modern homes",
-        "heading": "Smarter care. <em>Happier pets.</em>",
-        "subheading": "Self-cleaning litter boxes, smart fountains and feeders that take care of the daily chores — so you can enjoy more time with your pet.",
-        "button_label": "Shop the sale",
-        "button_link": "shopify://collections/all",
-        "button2_label": "Why Petone",
-        "button2_link": "",
         "promo_show": true,
         "promo_label": "Fall Sale",
         "promo_heading": "Settle into fall. Keep it fresh.",
         "promo_amount": "Save up to $400",
         "promo_button_label": "Shop bundles",
-        "promo_button_link": ""
+        "promo_button_link": "",
+        "autoplay": true,
+        "autoplay_speed": 6
       }
     },
     "trust": {

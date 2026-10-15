@@ -98,7 +98,8 @@ for name, sch in schemas.items():
 # templates & groups
 for f in glob.glob(f'{root}/templates/**/*.json', recursive=True) + glob.glob(f'{root}/sections/*.json'):
     rel = os.path.relpath(f, root)
-    d = json.load(open(f))
+    # Shopify's theme editor prepends a /* auto-generated */ comment to JSON templates
+    d = json.loads(re.sub(r'^\s*/\*.*?\*/', '', open(f, encoding='utf-8').read(), flags=re.S))
     for key, sec in d['sections'].items():
         t = sec['type']
         if t not in schemas: E(rel, 'unknown section', t); continue

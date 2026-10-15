@@ -1,0 +1,17 @@
+{
+  "type": "footer",
+  "name": "Footer group",
+  "sections": {
+    "footer": {
+      "type": "footer",
+      "blocks": {
+        "f1": { "type": "menu", "settings": { "title": "Information", "menu": "footer" } },
+        "f2": { "type": "menu", "settings": { "title": "Company", "menu": "main-menu" } },
+        "f3": { "type": "text", "settings": { "title": "Customer service", "text": "<p>Mon – Fri, 9am – 6pm</p><p>support@petone.com</p>" } }
+      },
+      "block_order": ["f1", "f2", "f3"],
+      "settings": {}
+    }
+  },
+  "order": ["footer"]
+}

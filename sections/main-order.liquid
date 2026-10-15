@@ -1,0 +1,30 @@
+<div class="page-width main-content">
+  <div class="page-header">
+    <a href="{{ routes.account_url }}" class="breadcrumbs">← {{ 'customer.account' | t }}</a>
+    <h1 class="h1">{{ 'customer.order' | t }} {{ order.name }}</h1>
+    <p>{{ order.created_at | date: '%B %d, %Y' }} · {{ order.financial_status_label }} · {{ order.fulfillment_status_label }}</p>
+  </div>
+  <div style="overflow-x:auto">
+    <table class="table">
+      <thead><tr><th>Product</th><th>{{ 'general.quantity' | t }}</th><th>{{ 'customer.total' | t }}</th></tr></thead>
+      <tbody>
+        {%- for item in order.line_items -%}
+          <tr><td>{{ item.title | link_to: item.product.url }}</td><td>{{ item.quantity }}</td><td>{{ item.final_line_price | money }}</td></tr>
+        {%- endfor -%}
+      </tbody>
+      <tfoot>
+        <tr><td colspan="2">{{ 'cart.subtotal' | t }}</td><td>{{ order.line_items_subtotal_price | money }}</td></tr>
+        {%- for shipping in order.shipping_methods -%}<tr><td colspan="2">{{ shipping.title }}</td><td>{{ shipping.price | money }}</td></tr>{%- endfor -%}
+        {%- for tax in order.tax_lines -%}<tr><td colspan="2">{{ tax.title }}</td><td>{{ tax.price | money }}</td></tr>{%- endfor -%}
+        <tr><th colspan="2">{{ 'customer.total' | t }}</th><th>{{ order.total_price | money_with_currency }}</th></tr>
+      </tfoot>
+    </table>
+  </div>
+  <div style="display:grid;gap:24px;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));margin-top:32px">
+    {%- if order.billing_address -%}<div><h2 class="h3">Billing address</h2>{{ order.billing_address | format_address }}</div>{%- endif -%}
+    {%- if order.shipping_address -%}<div><h2 class="h3">Shipping address</h2>{{ order.shipping_address | format_address }}</div>{%- endif -%}
+  </div>
+</div>
+{% schema %}
+{ "name": "Order" }
+{% endschema %}

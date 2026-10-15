@@ -1,0 +1,9 @@
+{%- comment -%} Outputs the first product tag starting with "badge:" as a badge. {%- endcomment -%}
+{%- for tag in product.tags -%}
+  {%- assign tag_lc = tag | downcase -%}
+  {%- if tag_lc contains 'badge:' -%}
+    {%- assign label = tag | split: ':' | last | strip -%}
+    <span class="badge badge--tag">{{ label }}</span>
+    {%- break -%}
+  {%- endif -%}
+{%- endfor -%}

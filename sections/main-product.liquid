@@ -1,0 +1,206 @@
+{%- assign current_variant = product.selected_or_first_available_variant -%}
+<div class="page-width">
+  <div class="product" data-product-section="{{ section.id }}">
+    <div class="product__gallery">
+      <div class="product__main-media" data-main-media>
+        {%- assign featured = current_variant.featured_media | default: product.featured_media -%}
+        {%- if featured -%}
+          {%- case featured.media_type -%}
+            {%- when 'video', 'external_video' -%}
+              {{ featured | media_tag: image_size: '1200x' }}
+            {%- when 'model' -%}
+              {{ featured | model_viewer_tag }}
+            {%- else -%}
+              {{ featured | image_url: width: 1400 | image_tag: loading: 'eager', fetchpriority: 'high', widths: '500, 800, 1100, 1400', sizes: '(min-width: 990px) 55vw, 100vw' }}
+          {%- endcase -%}
+        {%- else -%}
+          {{ 'product-1' | placeholder_svg_tag: 'placeholder' }}
+        {%- endif -%}
+      </div>
+      {%- if product.media.size > 1 -%}
+        <div class="product__thumbs">
+          {%- for media in product.media -%}
+            {%- if media.media_type == 'image' -%}
+              <button type="button" class="product__thumb{% if media.id == featured.id %} is-active{% endif %}" data-thumb data-media-id="{{ media.id }}" data-src="{{ media | image_url: width: 1400 }}" aria-label="{{ media.alt | escape | default: product.title }}">
+                {{ media | image_url: width: 200 | image_tag: loading: 'lazy' }}
+              </button>
+            {%- endif -%}
+          {%- endfor -%}
+        </div>
+      {%- endif -%}
+    </div>
+
+    <div class="product__info">
+      <nav class="breadcrumbs" aria-label="Breadcrumb">
+        <a href="{{ routes.root_url }}">Home</a> /
+        {%- if collection -%} <a href="{{ collection.url }}">{{ collection.title | escape }}</a> /{%- endif -%}
+        <span>{{ product.title | escape }}</span>
+      </nav>
+      {%- render 'product-badge', product: product -%}
+      <h1 class="product__title h1">{{ product.title | escape }}</h1>
+      <div data-product-price>{%- render 'price', product: product, variant: current_variant, use_variant: true -%}</div>
+      {%- if settings.card_show_savings -%}
+        <div class="product__savings">{%- render 'product-savings', product: product, style: 'text' -%}</div>
+      {%- endif -%}
+
+      {%- if section.settings.short_text != blank -%}
+        <div class="rte" style="opacity:.75;margin-bottom:24px">{{ section.settings.short_text }}</div>
+      {%- endif -%}
+
+      {%- form 'product', product, class: 'js-add-form', id: 'ProductForm' -%}
+        <input type="hidden" name="id" value="{{ current_variant.id }}" data-variant-id>
+
+        {%- unless product.has_only_default_variant -%}
+          {%- for option in product.options_with_values -%}
+            <fieldset class="option-group">
+              <legend>{{ option.name | escape }}: <span data-option-label="{{ forloop.index0 }}" style="font-weight:400">{{ option.selected_value | escape }}</span></legend>
+              <div class="option-group__values">
+                {%- assign opt_index = forloop.index0 -%}
+                {%- for value in option.values -%}
+                  <label class="option-pill">
+                    <input type="radio" name="option-{{ opt_index }}" value="{{ value | escape }}" data-option-index="{{ opt_index }}"{% if option.selected_value == value %} checked{% endif %}>
+                    <span>{{ value | escape }}</span>
+                  </label>
+                {%- endfor -%}
+              </div>
+            </fieldset>
+          {%- endfor -%}
+        {%- endunless -%}
+
+        <div class="buy-row">
+          <div class="qty">
+            <button type="button" data-qty="minus" aria-label="-">{% render 'icon', icon: 'minus' %}</button>
+            <input type="number" name="quantity" value="1" min="1" aria-label="{{ 'general.quantity' | t }}">
+            <button type="button" data-qty="plus" aria-label="+">{% render 'icon', icon: 'plus' %}</button>
+          </div>
+          <button type="submit" name="add" class="button button--large" data-add-button{% unless current_variant.available %} disabled{% endunless %}>
+            {%- if current_variant.available -%}{{ 'general.add_to_cart' | t }}{%- else -%}{{ 'general.sold_out' | t }}{%- endif -%}
+          </button>
+        </div>
+        <p class="form-error" data-form-error hidden></p>
+        {%- if section.settings.show_dynamic_checkout -%}
+          {{ form | payment_button }}
+        {%- endif -%}
+      {%- endform -%}
+
+      {%- if section.blocks.size > 0 -%}
+        <ul class="product__perks" role="list">
+          {%- for block in section.blocks -%}
+            <li {{ block.shopify_attributes }}>{% render 'icon', icon: block.settings.icon %} {{ block.settings.text | escape }}</li>
+          {%- endfor -%}
+        </ul>
+      {%- endif -%}
+
+      {%- if product.description != blank -%}
+        <div class="product__desc rte">{{ product.description }}</div>
+      {%- endif -%}
+    </div>
+  </div>
+</div>
+
+<script type="application/json" data-product-json="{{ section.id }}">
+  {{ product.variants | json }}
+</script>
+<script>
+  (function () {
+    var root = document.querySelector('[data-product-section="{{ section.id }}"]');
+    if (!root) return;
+    var variants = JSON.parse(document.querySelector('[data-product-json="{{ section.id }}"]').textContent);
+    var form = root.querySelector('#ProductForm');
+    var idInput = root.querySelector('[data-variant-id]');
+    var btn = root.querySelector('[data-add-button]');
+    var priceBox = root.querySelector('[data-product-price]');
+    var mainImg = function () { return root.querySelector('[data-main-media] img'); };
+    var money = function (cents) {
+      try { return new Intl.NumberFormat(document.documentElement.lang || undefined, { style: 'currency', currency: {{ cart.currency.iso_code | json }} }).format(cents / 100); }
+      catch (e) { return (cents / 100).toFixed(2); }
+    };
+    var setImage = function (src) { var img = mainImg(); if (img && src) { img.removeAttribute('srcset'); img.src = src; } };
+
+    root.querySelectorAll('[data-thumb]').forEach(function (t) {
+      t.addEventListener('click', function () {
+        root.querySelectorAll('[data-thumb]').forEach(function (x) { x.classList.remove('is-active'); });
+        t.classList.add('is-active');
+        setImage(t.dataset.src);
+      });
+    });
+
+    if (!form) return;
+    form.addEventListener('change', function (e) {
+      if (!e.target.matches('[data-option-index]')) return;
+      var selected = [];
+      form.querySelectorAll('[data-option-index]:checked').forEach(function (i) { selected[+i.dataset.optionIndex] = i.value; });
+      var label = root.querySelector('[data-option-label="' + e.target.dataset.optionIndex + '"]');
+      if (label) label.textContent = e.target.value;
+      var v = variants.find(function (x) { return x.options.every(function (o, i) { return o === selected[i]; }); });
+      if (!v) { btn.disabled = true; btn.textContent = {{ 'general.sold_out' | t | json }}; return; }
+      idInput.value = v.id;
+      btn.disabled = !v.available;
+      btn.textContent = v.available ? {{ 'general.add_to_cart' | t | json }} : {{ 'general.sold_out' | t | json }};
+      var html = '<div class="price' + (v.compare_at_price > v.price ? ' price--on-sale' : '') + '"><span class="price__current">' + money(v.price) + '</span>';
+      if (v.compare_at_price > v.price) html += '<s class="price__compare">' + money(v.compare_at_price) + '</s>';
+      priceBox.innerHTML = html + '</div>';
+      if (v.featured_image) setImage(v.featured_image.src);
+      var url = new URL(window.location.href);
+      url.searchParams.set('variant', v.id);
+      window.history.replaceState({}, '', url.toString());
+    });
+  })();
+</script>
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Product",
+  "name": {{ product.title | json }},
+  "url": {{ request.origin | append: product.url | json }},
+  {%- if product.featured_image -%}"image": {{ product.featured_image | image_url: width: 1200 | prepend: 'https:' | json }},{%- endif -%}
+  "description": {{ product.description | strip_html | truncate: 500 | json }},
+  "brand": { "@type": "Brand", "name": {{ product.vendor | json }} },
+  "offers": [
+    {%- for variant in product.variants -%}
+    {
+      "@type": "Offer",
+      {%- if variant.sku != blank -%}"sku": {{ variant.sku | json }},{%- endif -%}
+      "availability": "http://schema.org/{% if variant.available %}InStock{% else %}OutOfStock{% endif %}",
+      "price": {{ variant.price | divided_by: 100.00 | json }},
+      "priceCurrency": {{ cart.currency.iso_code | json }},
+      "url": {{ request.origin | append: variant.url | json }}
+    }{% unless forloop.last %},{% endunless %}
+    {%- endfor -%}
+  ]
+}
+</script>
+
+{% schema %}
+{
+  "name": "Product information",
+  "class": "section-main-product",
+  "max_blocks": 6,
+  "settings": [
+    { "type": "richtext", "id": "short_text", "label": "Short text under price" },
+    { "type": "checkbox", "id": "show_dynamic_checkout", "label": "Show dynamic checkout buttons", "default": true }
+  ],
+  "blocks": [
+    {
+      "type": "perk",
+      "name": "Perk",
+      "settings": [
+        {
+          "type": "select", "id": "icon", "label": "Icon",
+          "options": [
+            { "value": "trial", "label": "Trial" },
+            { "value": "shipping", "label": "Shipping" },
+            { "value": "warranty", "label": "Warranty" },
+            { "value": "payment", "label": "Payment" },
+            { "value": "support", "label": "Support" },
+            { "value": "check", "label": "Check" }
+          ],
+          "default": "shipping"
+        },
+        { "type": "text", "id": "text", "label": "Text", "default": "Free shipping on orders over $49" }
+      ]
+    }
+  ]
+}
+{% endschema %}

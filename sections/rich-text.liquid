@@ -1,0 +1,33 @@
+<section class="section rich-text bg-{{ section.settings.background }}" style="--pt: {{ section.settings.padding_top }}px; --pb: {{ section.settings.padding_bottom }}px;">
+  <div class="page-width rich-text__inner">
+    {%- if section.settings.eyebrow != blank -%}<p class="eyebrow">{{ section.settings.eyebrow | escape }}</p>{%- endif -%}
+    {%- if section.settings.heading != blank -%}<h2 class="h1">{{ section.settings.heading }}</h2>{%- endif -%}
+    {%- if section.settings.text != blank -%}<div class="rte">{{ section.settings.text }}</div>{%- endif -%}
+    {%- if section.settings.button_label != blank -%}<a href="{{ section.settings.button_link }}" class="button">{{ section.settings.button_label | escape }}</a>{%- endif -%}
+  </div>
+</section>
+{% schema %}
+{
+  "name": "Rich text",
+  "settings": [
+    { "type": "text", "id": "eyebrow", "label": "Eyebrow" },
+    { "type": "inline_richtext", "id": "heading", "label": "Heading", "default": "Talk about your brand" },
+    { "type": "richtext", "id": "text", "label": "Text", "default": "<p>Share information about your brand with your customers.</p>" },
+    { "type": "text", "id": "button_label", "label": "Button label" },
+    { "type": "url", "id": "button_link", "label": "Button link" },
+    {
+      "type": "select", "id": "background", "label": "Background",
+      "options": [
+        { "value": "white", "label": "White" },
+        { "value": "surface", "label": "Soft gray" },
+        { "value": "dark", "label": "Black" },
+        { "value": "accent", "label": "Green" }
+      ],
+      "default": "white"
+    },
+    { "type": "range", "id": "padding_top", "label": "Top padding", "min": 0, "max": 120, "step": 4, "unit": "px", "default": 64 },
+    { "type": "range", "id": "padding_bottom", "label": "Bottom padding", "min": 0, "max": 120, "step": 4, "unit": "px", "default": 64 }
+  ],
+  "presets": [{ "name": "Rich text" }]
+}
+{% endschema %}

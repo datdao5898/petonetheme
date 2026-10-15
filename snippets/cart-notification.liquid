@@ -1,0 +1,14 @@
+<div class="cart-toast" id="CartToast" role="status" aria-live="polite" hidden>
+  <div class="cart-toast__head">
+    <span class="cart-toast__check">{% render 'icon', icon: 'check' %}</span>
+    <span>{{ 'general.added_to_cart' | t }}</span>
+    <button type="button" class="cart-toast__close" data-toast-close aria-label="{{ 'general.close' | t }}">{% render 'icon', icon: 'close' %}</button>
+  </div>
+  <div class="cart-toast__item" data-toast-item></div>
+  <div class="cart-toast__actions">
+    <a href="{{ routes.cart_url }}" class="button button--outline button--small">{{ 'general.view_cart' | t }}</a>
+    <form action="{{ routes.cart_url }}" method="post">
+      <button type="submit" name="checkout" class="button button--small">{{ 'general.checkout' | t }}</button>
+    </form>
+  </div>
+</div>

@@ -1,0 +1,122 @@
+<section class="section brand-story bg-{{ section.settings.background }}" style="--pt: {{ section.settings.padding_top }}px; --pb: {{ section.settings.padding_bottom }}px;">
+  <div class="page-width">
+    <div class="section-head section-head--center">
+      <div>
+        {%- if section.settings.eyebrow != blank -%}<p class="eyebrow">{{ section.settings.eyebrow | escape }}</p>{%- endif -%}
+        {%- if section.settings.heading != blank -%}<h2 class="h1">{{ section.settings.heading }}</h2>{%- endif -%}
+        {%- if section.settings.text != blank -%}<p class="section-head__text">{{ section.settings.text }}</p>{%- endif -%}
+      </div>
+    </div>
+
+    {%- assign stats = section.blocks | where: 'type', 'stat' -%}
+    {%- if stats.size > 0 -%}
+      <div class="stats">
+        {%- for block in stats -%}
+          <div class="stat" {{ block.shopify_attributes }}>
+            <span class="stat__value">{{ block.settings.value | escape }}</span>
+            <span class="stat__label">{{ block.settings.label | escape }}</span>
+          </div>
+        {%- endfor -%}
+      </div>
+    {%- endif -%}
+
+    <div class="story-grid story-grid--{{ section.settings.layout }}">
+      {%- assign panels = section.blocks | where: 'type', 'panel' -%}
+      {%- for block in panels -%}
+        {%- assign b = block.settings -%}
+        <article class="story-panel" {{ block.shopify_attributes }}>
+          <div class="story-panel__media">
+            {%- if b.video != blank -%}
+              {{ b.video | video_tag: autoplay: true, loop: true, muted: true, playsinline: true, controls: false, image_size: '1400x' }}
+            {%- elsif b.image != blank -%}
+              {{ b.image | image_url: width: 1600 | image_tag: loading: 'lazy', widths: '500, 800, 1200, 1600', sizes: '(min-width: 990px) 50vw, 100vw' }}
+            {%- else -%}
+              {%- capture ph -%}lifestyle-{% cycle '1', '2' %}{%- endcapture -%}
+              {{ ph | placeholder_svg_tag: 'placeholder' }}
+            {%- endif -%}
+          </div>
+          {%- if b.video_url != blank -%}
+            <a class="story-panel__play" href="{{ b.video_url }}" target="_blank" rel="noopener" aria-label="Play video">{% render 'icon', icon: 'play' %}</a>
+          {%- endif -%}
+          <div class="story-panel__content">
+            {%- if b.eyebrow != blank -%}<p class="eyebrow eyebrow--light">{{ b.eyebrow | escape }}</p>{%- endif -%}
+            {%- if b.title != blank -%}<h3 class="h2">{{ b.title }}</h3>{%- endif -%}
+            {%- if b.text != blank -%}<div class="rte">{{ b.text }}</div>{%- endif -%}
+            {%- if b.button_label != blank -%}
+              <a href="{{ b.button_link }}" class="button {% if forloop.first %}button--accent{% else %}button--white{% endif %}">{{ b.button_label | escape }} {% render 'icon', icon: 'arrow-right' %}</a>
+            {%- endif -%}
+          </div>
+        </article>
+      {%- endfor -%}
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Brand story",
+  "class": "section-brand-story",
+  "max_blocks": 8,
+  "settings": [
+    { "type": "text", "id": "eyebrow", "label": "Eyebrow", "default": "Why Petone" },
+    { "type": "inline_richtext", "id": "heading", "label": "Heading", "default": "Smart pet tech, made with love" },
+    { "type": "inline_richtext", "id": "text", "label": "Text", "default": "Designed by pet parents and engineers to make everyday care effortless, hygienic and safe." },
+    {
+      "type": "select", "id": "layout", "label": "Panel layout",
+      "options": [
+        { "value": "wide-left", "label": "Large left, small right" },
+        { "value": "equal", "label": "Equal columns" }
+      ],
+      "default": "wide-left"
+    },
+    {
+      "type": "select", "id": "background", "label": "Background",
+      "options": [
+        { "value": "white", "label": "White" },
+        { "value": "surface", "label": "Soft gray" },
+        { "value": "dark", "label": "Black" }
+      ],
+      "default": "dark"
+    },
+    { "type": "range", "id": "padding_top", "label": "Top padding", "min": 0, "max": 120, "step": 4, "unit": "px", "default": 88 },
+    { "type": "range", "id": "padding_bottom", "label": "Bottom padding", "min": 0, "max": 120, "step": 4, "unit": "px", "default": 88 }
+  ],
+  "blocks": [
+    {
+      "type": "panel",
+      "name": "Image panel",
+      "settings": [
+        { "type": "image_picker", "id": "image", "label": "Image" },
+        { "type": "video", "id": "video", "label": "Background video", "info": "Optional, replaces the image." },
+        { "type": "url", "id": "video_url", "label": "Play button link", "info": "Optional. e.g. a YouTube link." },
+        { "type": "text", "id": "eyebrow", "label": "Eyebrow", "default": "Our story" },
+        { "type": "inline_richtext", "id": "title", "label": "Title", "default": "Built for pets. Trusted by families." },
+        { "type": "richtext", "id": "text", "label": "Text", "default": "<p>From smart litter boxes to filtered fountains, every Petone product is tested for safety, quietness and durability.</p>" },
+        { "type": "text", "id": "button_label", "label": "Button label", "default": "Learn more" },
+        { "type": "url", "id": "button_link", "label": "Button link" }
+      ]
+    },
+    {
+      "type": "stat",
+      "name": "Stat",
+      "settings": [
+        { "type": "text", "id": "value", "label": "Value", "default": "50,000+" },
+        { "type": "text", "id": "label", "label": "Label", "default": "Happy pets" }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Brand story",
+      "blocks": [
+        { "type": "stat", "settings": { "value": "50,000+", "label": "Happy pets" } },
+        { "type": "stat", "settings": { "value": "4.8★", "label": "Average rating" } },
+        { "type": "stat", "settings": { "value": "2-year", "label": "Warranty" } },
+        { "type": "stat", "settings": { "value": "24/7", "label": "Pet parent support" } },
+        { "type": "panel" },
+        { "type": "panel", "settings": { "eyebrow": "Partner with us", "title": "Creators & media", "text": "<p>Love pets and tech? Join the Petone partner program and grow with us.</p>", "button_label": "Partner with us" } }
+      ]
+    }
+  ]
+}
+{% endschema %}

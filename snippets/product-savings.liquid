@@ -1,0 +1,31 @@
+{%- comment -%}
+  Outputs the biggest saving across variants, e.g. "Save $50" or "Up to $50 off".
+  Accepts: product, style ('text' | 'percent')
+{%- endcomment -%}
+{%- liquid
+  assign max_saving = 0
+  assign max_percent = 0
+  assign saving_count = 0
+  for v in product.variants
+    if v.compare_at_price > v.price
+      assign s = v.compare_at_price | minus: v.price
+      assign saving_count = saving_count | plus: 1
+      if s > max_saving
+        assign max_saving = s
+      endif
+      assign p = s | times: 100.0 | divided_by: v.compare_at_price | round
+      if p > max_percent
+        assign max_percent = p
+      endif
+    endif
+  endfor
+-%}
+{%- if max_saving > 0 -%}
+  {%- if style == 'percent' -%}
+    <span class="badge badge--sale">-{{ max_percent }}%</span>
+  {%- elsif saving_count > 1 and product.variants.size > 1 -%}
+    <span class="savings">{{ 'general.up_to' | t }} {{ max_saving | money_without_trailing_zeros }} {{ 'general.off' | t }}</span>
+  {%- else -%}
+    <span class="savings">{{ 'general.save' | t }} {{ max_saving | money_without_trailing_zeros }}</span>
+  {%- endif -%}
+{%- endif -%}

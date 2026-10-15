@@ -1,0 +1,41 @@
+<div class="page-width main-content">
+  <div class="page-header">
+    <a href="{{ routes.account_url }}" class="breadcrumbs">← {{ 'customer.account' | t }}</a>
+    <h1 class="h1">{{ 'customer.addresses' | t }}</h1>
+  </div>
+  {%- paginate customer.addresses by 10 -%}
+    <div style="display:grid;gap:20px;grid-template-columns:repeat(auto-fit,minmax(280px,1fr))">
+      {%- for address in customer.addresses -%}
+        <div class="form-card" style="margin:0">
+          {%- if address == customer.default_address -%}<span class="badge badge--accent">{{ 'customer.default_address' | t }}</span>{%- endif -%}
+          <p style="margin-top:12px">{{ address | format_address }}</p>
+          {%- form 'customer_address', address -%}
+            <input type="hidden" name="_method" value="delete">
+            <button type="submit" class="link-underline" onclick="return confirm('Delete this address?')">Delete</button>
+          {%- endform -%}
+        </div>
+      {%- endfor -%}
+    </div>
+    {%- render 'pagination', paginate: paginate -%}
+  {%- endpaginate -%}
+
+  <div class="form-card" style="margin-top:40px;max-width:640px">
+    <h2 class="h3">Add a new address</h2>
+    {%- form 'customer_address', customer.new_address -%}
+      {%- if form.errors -%}<p class="form-error">{{ form.errors | default_errors }}</p>{%- endif -%}
+      <div class="field"><label for="AddrFirst">{{ 'customer.first_name' | t }}</label><input id="AddrFirst" name="address[first_name]" autocomplete="given-name"></div>
+      <div class="field"><label for="AddrLast">{{ 'customer.last_name' | t }}</label><input id="AddrLast" name="address[last_name]" autocomplete="family-name"></div>
+      <div class="field"><label for="AddrA1">Address</label><input id="AddrA1" name="address[address1]" autocomplete="address-line1"></div>
+      <div class="field"><label for="AddrA2">Apartment, suite, etc.</label><input id="AddrA2" name="address[address2]" autocomplete="address-line2"></div>
+      <div class="field"><label for="AddrCity">City</label><input id="AddrCity" name="address[city]" autocomplete="address-level2"></div>
+      <div class="field"><label for="AddrCountry">Country</label><select id="AddrCountry" name="address[country]" autocomplete="country">{{ all_country_option_tags }}</select></div>
+      <div class="field"><label for="AddrZip">Postal code</label><input id="AddrZip" name="address[zip]" autocomplete="postal-code"></div>
+      <div class="field"><label for="AddrPhone">Phone</label><input id="AddrPhone" type="tel" name="address[phone]" autocomplete="tel"></div>
+      <label style="display:flex;gap:8px;margin-bottom:16px"><input type="checkbox" name="address[default]" value="1"> Set as default address</label>
+      <button type="submit" class="button">{{ 'customer.submit' | t }}</button>
+    {%- endform -%}
+  </div>
+</div>
+{% schema %}
+{ "name": "Addresses" }
+{% endschema %}

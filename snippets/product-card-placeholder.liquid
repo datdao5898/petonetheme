@@ -1,0 +1,11 @@
+<div class="product-card">
+  <div class="product-card__media">
+    <div class="product-card__badges"><span class="badge badge--tag">New</span></div>
+    {{ 'product-' | append: index | placeholder_svg_tag: 'placeholder product-card__img' }}
+  </div>
+  <div class="product-card__info">
+    <h3 class="product-card__title">Smart pet product</h3>
+    <div class="product-card__savings"><span class="savings">{{ 'general.save' | t }} {{ 5000 | money_without_trailing_zeros }}</span></div>
+    <span class="button button--small button--dark product-card__btn">{{ 'general.shop_now' | t }}</span>
+  </div>
+</div>

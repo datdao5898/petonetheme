@@ -1,0 +1,76 @@
+{
+  "general": {
+    "skip_to_content": "Skip to content",
+    "menu": "Menu",
+    "close": "Close",
+    "search": "Search",
+    "search_placeholder": "Search products",
+    "account": "Account",
+    "cart": "Cart",
+    "previous": "Previous",
+    "next": "Next",
+    "shop_now": "Shop now",
+    "learn_more": "Learn more",
+    "see_details": "See details",
+    "add_to_cart": "Add to cart",
+    "sold_out": "Sold out",
+    "added_to_cart": "Added to your cart",
+    "view_cart": "View cart",
+    "checkout": "Checkout",
+    "save": "Save",
+    "up_to": "Up to",
+    "off": "off",
+    "from": "From",
+    "quantity": "Quantity",
+    "page_not_found": "Page not found",
+    "back_home": "Back to home",
+    "continue_shopping": "Continue shopping",
+    "read_more": "Read more",
+    "no_products": "No products found"
+  },
+  "cart": {
+    "title": "Your cart",
+    "empty": "Your cart is empty",
+    "subtotal": "Subtotal",
+    "remove": "Remove",
+    "update": "Update",
+    "taxes_note": "Taxes and shipping calculated at checkout",
+    "note": "Order note"
+  },
+  "search": {
+    "title": "Search",
+    "results_for": "Results for \"{{ terms }}\"",
+    "no_results": "No results found for \"{{ terms }}\""
+  },
+  "customer": {
+    "login": "Log in",
+    "logout": "Log out",
+    "register": "Create account",
+    "email": "Email",
+    "password": "Password",
+    "first_name": "First name",
+    "last_name": "Last name",
+    "forgot_password": "Forgot your password?",
+    "reset_password": "Reset password",
+    "account": "My account",
+    "orders": "Order history",
+    "no_orders": "You haven't placed any orders yet.",
+    "order": "Order",
+    "date": "Date",
+    "total": "Total",
+    "status": "Status",
+    "addresses": "Addresses",
+    "submit": "Submit",
+    "activate": "Activate account",
+    "default_address": "Default address"
+  },
+  "newsletter": {
+    "email": "Your email",
+    "subscribe": "Subscribe",
+    "success": "Thanks for subscribing!"
+  },
+  "password": {
+    "enter": "Enter store using password",
+    "submit": "Enter"
+  }
+}

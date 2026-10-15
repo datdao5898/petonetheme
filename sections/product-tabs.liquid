@@ -1,0 +1,100 @@
+{%- liquid
+  assign tab_count = section.blocks.size
+-%}
+<section class="section product-tabs bg-{{ section.settings.background }}" style="--pt: {{ section.settings.padding_top }}px; --pb: {{ section.settings.padding_bottom }}px;">
+  <tabs-component class="page-width">
+    <div class="section-head">
+      <div>
+        {%- if section.settings.eyebrow != blank -%}<p class="eyebrow">{{ section.settings.eyebrow | escape }}</p>{%- endif -%}
+        {%- if section.settings.heading != blank -%}<h2 class="h1">{{ section.settings.heading }}</h2>{%- endif -%}
+      </div>
+      <div class="carousel-arrows">
+        <button type="button" class="carousel-arrow" data-scroll="prev" aria-label="{{ 'general.previous' | t }}">{% render 'icon', icon: 'chevron-left' %}</button>
+        <button type="button" class="carousel-arrow" data-scroll="next" aria-label="{{ 'general.next' | t }}">{% render 'icon', icon: 'chevron-right' %}</button>
+      </div>
+    </div>
+
+    {%- if tab_count > 1 -%}
+      <div class="tabs" role="tablist">
+        {%- for block in section.blocks -%}
+          {%- assign label = block.settings.label | default: block.settings.collection.title | default: 'Collection' -%}
+          <button type="button" role="tab" class="tab{% if forloop.first %} is-active{% endif %}" aria-selected="{% if forloop.first %}true{% else %}false{% endif %}" aria-controls="Panel-{{ block.id }}" {{ block.shopify_attributes }}>{{ label | escape }}</button>
+        {%- endfor -%}
+      </div>
+    {%- endif -%}
+
+    {%- for block in section.blocks -%}
+      {%- liquid
+        assign col = block.settings.collection
+        if col == blank and product
+          assign col = product.collections.first
+        endif
+      -%}
+      <div class="tab-panel{% if forloop.first %} is-active{% endif %}" id="Panel-{{ block.id }}" role="tabpanel"{% unless forloop.first %} hidden{% endunless %}>
+        <div class="carousel scroller" data-carousel>
+          {%- if col != blank and col.products_count > 0 -%}
+            {%- for product in col.products limit: section.settings.limit -%}
+              <div class="carousel__slide">
+                {% render 'product-card', product: product, show_price: section.settings.show_price %}
+              </div>
+            {%- endfor -%}
+          {%- else -%}
+            {%- for i in (1..6) -%}
+              <div class="carousel__slide">{% render 'product-card-placeholder', index: i %}</div>
+            {%- endfor -%}
+          {%- endif -%}
+        </div>
+        {%- if col != blank and section.settings.show_view_all -%}
+          <div class="center mt-32"><a href="{{ col.url }}" class="button button--outline">{{ 'general.shop_now' | t }} — {{ col.title | escape }}</a></div>
+        {%- endif -%}
+      </div>
+    {%- endfor -%}
+  </tabs-component>
+</section>
+
+{% schema %}
+{
+  "name": "Product tabs carousel",
+  "class": "section-product-tabs",
+  "max_blocks": 8,
+  "settings": [
+    { "type": "text", "id": "eyebrow", "label": "Eyebrow", "default": "Collections" },
+    { "type": "inline_richtext", "id": "heading", "label": "Heading", "default": "Smart care for every routine" },
+    { "type": "range", "id": "limit", "label": "Products per tab", "min": 4, "max": 16, "step": 1, "default": 10 },
+    { "type": "checkbox", "id": "show_price", "label": "Show price", "default": true },
+    { "type": "checkbox", "id": "show_view_all", "label": "Show 'view collection' button", "default": false },
+    {
+      "type": "select", "id": "background", "label": "Background",
+      "options": [
+        { "value": "white", "label": "White" },
+        { "value": "surface", "label": "Soft gray" },
+        { "value": "dark", "label": "Black" }
+      ],
+      "default": "surface"
+    },
+    { "type": "range", "id": "padding_top", "label": "Top padding", "min": 0, "max": 120, "step": 4, "unit": "px", "default": 80 },
+    { "type": "range", "id": "padding_bottom", "label": "Bottom padding", "min": 0, "max": 120, "step": 4, "unit": "px", "default": 80 }
+  ],
+  "blocks": [
+    {
+      "type": "tab",
+      "name": "Tab",
+      "settings": [
+        { "type": "text", "id": "label", "label": "Tab label", "info": "Defaults to the collection title." },
+        { "type": "collection", "id": "collection", "label": "Collection" }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Product tabs carousel",
+      "blocks": [
+        { "type": "tab", "settings": { "label": "Best sellers" } },
+        { "type": "tab", "settings": { "label": "Litter boxes" } },
+        { "type": "tab", "settings": { "label": "Fountains" } },
+        { "type": "tab", "settings": { "label": "Feeders" } }
+      ]
+    }
+  ]
+}
+{% endschema %}

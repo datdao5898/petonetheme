@@ -1,0 +1,103 @@
+<!doctype html>
+<html class="no-js" lang="{{ request.locale.iso_code }}">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <meta name="theme-color" content="{{ settings.color_dark }}">
+    <link rel="canonical" href="{{ canonical_url }}">
+    <link rel="preconnect" href="https://cdn.shopify.com" crossorigin>
+    <link rel="preconnect" href="https://fonts.shopifycdn.com" crossorigin>
+
+    {%- if settings.favicon != blank -%}
+      <link rel="icon" type="image/png" href="{{ settings.favicon | image_url: width: 32, height: 32 }}">
+    {%- endif -%}
+
+    <title>
+      {{ page_title }}
+      {%- if current_tags %} &ndash; {{ current_tags | join: ', ' }}{% endif -%}
+      {%- if current_page != 1 %} &ndash; Page {{ current_page }}{% endif -%}
+      {%- unless page_title contains shop.name %} &ndash; {{ shop.name }}{% endunless -%}
+    </title>
+
+    {% if page_description %}
+      <meta name="description" content="{{ page_description | escape }}">
+    {% endif %}
+
+    {% render 'meta-tags' %}
+
+    {{ content_for_header }}
+
+    {%- liquid
+      assign heading_font_bold = settings.font_heading | font_modify: 'weight', 'bolder'
+      assign body_font_bold = settings.font_body | font_modify: 'weight', 'bold'
+      assign body_font_medium = settings.font_body | font_modify: 'weight', '500'
+    -%}
+
+    {% style %}
+      {{ settings.font_heading | font_face: font_display: 'swap' }}
+      {{ settings.font_body | font_face: font_display: 'swap' }}
+      {{ body_font_bold | font_face: font_display: 'swap' }}
+      {{ body_font_medium | font_face: font_display: 'swap' }}
+
+      :root {
+        --color-dark: {{ settings.color_dark }};
+        --color-dark-rgb: {{ settings.color_dark | color_extract: 'red' }}, {{ settings.color_dark | color_extract: 'green' }}, {{ settings.color_dark | color_extract: 'blue' }};
+        --color-accent: {{ settings.color_accent }};
+        --color-accent-rgb: {{ settings.color_accent | color_extract: 'red' }}, {{ settings.color_accent | color_extract: 'green' }}, {{ settings.color_accent | color_extract: 'blue' }};
+        --color-accent-hover: {{ settings.color_accent_hover }};
+        --color-bg: {{ settings.color_background }};
+        --color-surface: {{ settings.color_surface }};
+        --color-text: {{ settings.color_text }};
+        --color-text-rgb: {{ settings.color_text | color_extract: 'red' }}, {{ settings.color_text | color_extract: 'green' }}, {{ settings.color_text | color_extract: 'blue' }};
+        --color-sale: {{ settings.color_sale }};
+
+        --font-heading: {{ settings.font_heading.family }}, {{ settings.font_heading.fallback_families }};
+        --font-heading-weight: {{ settings.font_heading.weight }};
+        --font-body: {{ settings.font_body.family }}, {{ settings.font_body.fallback_families }};
+        --font-body-weight: {{ settings.font_body.weight }};
+        --font-body-weight-bold: {{ body_font_bold.weight | default: 700 }};
+        --heading-scale: {{ settings.heading_scale | divided_by: 100.0 }};
+
+        --page-width: {{ settings.page_width }}px;
+        --radius: {{ settings.radius }}px;
+        --radius-btn: {{ settings.button_radius }}px;
+        --logo-width: {{ settings.logo_width }}px;
+      }
+    {% endstyle %}
+
+    {{ 'base.css' | asset_url | stylesheet_tag }}
+    <script src="{{ 'theme.js' | asset_url }}" defer="defer"></script>
+    <script>
+      document.documentElement.className = document.documentElement.className.replace('no-js', 'js');
+      window.theme = {
+        cartType: {{ settings.cart_type | json }},
+        routes: {
+          cart: {{ routes.cart_url | json }},
+          cartAdd: {{ routes.cart_add_url | json }},
+          cartChange: {{ routes.cart_change_url | json }}
+        },
+        strings: {
+          added: {{ 'general.added_to_cart' | t | json }},
+          viewCart: {{ 'general.view_cart' | t | json }},
+          checkout: {{ 'general.checkout' | t | json }},
+          soldOut: {{ 'general.sold_out' | t | json }}
+        }
+      };
+    </script>
+  </head>
+
+  <body class="template-{{ template.name }}">
+    <a class="skip-link visually-hidden" href="#MainContent">{{ 'general.skip_to_content' | t }}</a>
+
+    {% sections 'header-group' %}
+
+    <main id="MainContent" class="main" role="main" tabindex="-1">
+      {{ content_for_layout }}
+    </main>
+
+    {% sections 'footer-group' %}
+
+    {% render 'cart-notification' %}
+  </body>
+</html>

@@ -1,0 +1,18 @@
+{%- comment -%}
+  Renders the store logo.
+  Accepts: variant ('light' = logo for light backgrounds, 'dark' = logo for dark backgrounds)
+{%- endcomment -%}
+{%- liquid
+  if variant == 'light'
+    assign logo_img = settings.logo_light_bg
+    assign fallback = 'logo-dark.png'
+  else
+    assign logo_img = settings.logo
+    assign fallback = 'logo-green.png'
+  endif
+-%}
+{%- if logo_img != blank -%}
+  {{ logo_img | image_url: width: 600 | image_tag: class: 'logo__img', alt: shop.name, loading: 'eager', widths: '200, 300, 400, 600' }}
+{%- else -%}
+  <img class="logo__img" src="{{ fallback | asset_url }}" alt="{{ shop.name | escape }}" width="648" height="152" loading="eager">
+{%- endif -%}

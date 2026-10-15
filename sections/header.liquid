@@ -1,0 +1,162 @@
+{%- liquid
+  assign menu = section.settings.menu
+-%}
+<sticky-header class="header-wrapper scheme-{{ section.settings.scheme }}{% if section.settings.sticky %} header-wrapper--sticky{% endif %}">
+  <header class="header page-width">
+    <details class="menu-drawer" id="MenuDrawer">
+      <summary class="header__icon header__icon--menu" aria-label="{{ 'general.menu' | t }}">
+        <span class="icon-open">{% render 'icon', icon: 'menu' %}</span>
+        <span class="icon-close">{% render 'icon', icon: 'close' %}</span>
+      </summary>
+      <div class="menu-drawer__panel">
+        <nav aria-label="{{ 'general.menu' | t }}">
+          <ul class="menu-drawer__list" role="list">
+            {%- for link in menu.links -%}
+              <li>
+                {%- if link.links != blank -%}
+                  <details class="menu-drawer__sub">
+                    <summary>{{ link.title | escape }} {% render 'icon', icon: 'chevron-down' %}</summary>
+                    <ul role="list">
+                      <li><a href="{{ link.url }}">{{ link.title | escape }}</a></li>
+                      {%- for child in link.links -%}
+                        <li><a href="{{ child.url }}"{% if child.current %} aria-current="page"{% endif %}>{{ child.title | escape }}</a></li>
+                      {%- endfor -%}
+                    </ul>
+                  </details>
+                {%- else -%}
+                  <a href="{{ link.url }}"{% if link.current %} aria-current="page"{% endif %}>{{ link.title | escape }}</a>
+                {%- endif -%}
+              </li>
+            {%- endfor -%}
+          </ul>
+        </nav>
+        {%- if section.settings.drawer_promo_text != blank -%}
+          <div class="menu-drawer__promo">
+            {{ section.settings.drawer_promo_text }}
+            {%- if section.settings.drawer_promo_link != blank -%}
+              <a class="button button--small" href="{{ section.settings.drawer_promo_link }}">{{ 'general.shop_now' | t }}</a>
+            {%- endif -%}
+          </div>
+        {%- endif -%}
+        {% render 'social-icons' %}
+      </div>
+    </details>
+
+    <a href="{{ routes.root_url }}" class="header__logo logo" aria-label="{{ shop.name | escape }}">
+      {%- if section.settings.scheme == 'light' -%}
+        {% render 'logo', variant: 'light' %}
+      {%- else -%}
+        {% render 'logo', variant: 'dark' %}
+      {%- endif -%}
+    </a>
+
+    <nav class="header__nav" aria-label="Main">
+      <ul class="header__menu" role="list">
+        {%- for link in menu.links -%}
+          <li class="header__menu-item{% if link.links != blank %} has-dropdown{% endif %}">
+            <a href="{{ link.url }}" class="header__link{% if link.active %} is-active{% endif %}"{% if link.current %} aria-current="page"{% endif %}>
+              {{ link.title | escape }}
+              {%- if link.links != blank %}{% render 'icon', icon: 'chevron-down' %}{% endif -%}
+            </a>
+            {%- if link.links != blank -%}
+              <div class="header__dropdown">
+                <ul role="list">
+                  {%- for child in link.links -%}
+                    <li><a href="{{ child.url }}"{% if child.current %} aria-current="page"{% endif %}>{{ child.title | escape }}</a></li>
+                  {%- endfor -%}
+                </ul>
+              </div>
+            {%- endif -%}
+          </li>
+        {%- endfor -%}
+      </ul>
+    </nav>
+
+    <div class="header__icons">
+      <details class="header-search">
+        <summary class="header__icon" aria-label="{{ 'general.search' | t }}">{% render 'icon', icon: 'search' %}</summary>
+        <div class="header-search__panel">
+          <form action="{{ routes.search_url }}" method="get" role="search" class="search-form page-width">
+            <input type="search" name="q" placeholder="{{ 'general.search_placeholder' | t }}" aria-label="{{ 'general.search' | t }}" autocomplete="off">
+            <input type="hidden" name="options[prefix]" value="last">
+            <button type="submit" class="button button--small">{{ 'general.search' | t }}</button>
+          </form>
+        </div>
+      </details>
+      {%- if shop.customer_accounts_enabled -%}
+        <a href="{%- if customer -%}{{ routes.account_url }}{%- else -%}{{ routes.account_login_url }}{%- endif -%}" class="header__icon header__icon--account" aria-label="{{ 'general.account' | t }}">
+          {% render 'icon', icon: 'account' %}
+        </a>
+      {%- endif -%}
+      <a href="{{ routes.cart_url }}" class="header__icon header__icon--cart" id="cart-icon-bubble" aria-label="{{ 'general.cart' | t }}">
+        {% render 'icon', icon: 'cart' %}
+        <span class="cart-count" data-cart-count{% if cart.item_count == 0 %} hidden{% endif %}>{{ cart.item_count }}</span>
+      </a>
+      {%- if section.settings.cta_label != blank -%}
+        <a href="{{ section.settings.cta_link }}" class="button button--small header__cta">{{ section.settings.cta_label | escape }}</a>
+      {%- endif -%}
+    </div>
+  </header>
+</sticky-header>
+
+{% schema %}
+{
+  "name": "Header",
+  "class": "section-header",
+  "settings": [
+    {
+      "type": "link_list",
+      "id": "menu",
+      "label": "Menu",
+      "default": "main-menu"
+    },
+    {
+      "type": "select",
+      "id": "scheme",
+      "label": "Color",
+      "options": [
+        { "value": "dark", "label": "Black" },
+        { "value": "light", "label": "White" }
+      ],
+      "default": "dark"
+    },
+    {
+      "type": "checkbox",
+      "id": "sticky",
+      "label": "Sticky header",
+      "default": true
+    },
+    {
+      "type": "header",
+      "content": "Call to action button"
+    },
+    {
+      "type": "text",
+      "id": "cta_label",
+      "label": "Button label",
+      "default": "Shop the sale"
+    },
+    {
+      "type": "url",
+      "id": "cta_link",
+      "label": "Button link",
+      "default": "/collections/all"
+    },
+    {
+      "type": "header",
+      "content": "Mobile menu"
+    },
+    {
+      "type": "richtext",
+      "id": "drawer_promo_text",
+      "label": "Promo text",
+      "default": "<p><strong>Fall Sale</strong> — save up to 40% on smart pet care.</p>"
+    },
+    {
+      "type": "url",
+      "id": "drawer_promo_link",
+      "label": "Promo link"
+    }
+  ]
+}
+{% endschema %}

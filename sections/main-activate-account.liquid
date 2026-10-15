@@ -1,0 +1,14 @@
+<div class="page-width main-content" style="padding-top:56px">
+  <div class="form-card">
+    <h1 class="h2">{{ 'customer.activate' | t }}</h1>
+    {%- form 'activate_customer_password' -%}
+      {%- if form.errors -%}<p class="form-error">{{ form.errors | default_errors }}</p>{%- endif -%}
+      <div class="field"><label for="ActPass">{{ 'customer.password' | t }}</label><input id="ActPass" type="password" name="customer[password]" autocomplete="new-password" required></div>
+      <div class="field"><label for="ActPass2">Confirm password</label><input id="ActPass2" type="password" name="customer[password_confirmation]" autocomplete="new-password" required></div>
+      <button type="submit" class="button">{{ 'customer.activate' | t }}</button>
+    {%- endform -%}
+  </div>
+</div>
+{% schema %}
+{ "name": "Activate account" }
+{% endschema %}

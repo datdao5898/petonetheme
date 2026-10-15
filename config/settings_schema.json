@@ -1,0 +1,198 @@
+[
+  {
+    "name": "theme_info",
+    "theme_name": "Petone",
+    "theme_version": "1.0.0",
+    "theme_author": "Petone",
+    "theme_documentation_url": "https://help.shopify.com/manual/online-store/themes",
+    "theme_support_url": "https://help.shopify.com/"
+  },
+  {
+    "name": "Logo",
+    "settings": [
+      {
+        "type": "image_picker",
+        "id": "logo",
+        "label": "Logo (on dark background)",
+        "info": "Leave empty to use the built-in green Petone logo."
+      },
+      {
+        "type": "image_picker",
+        "id": "logo_light_bg",
+        "label": "Logo (on light background)",
+        "info": "Leave empty to use the built-in dark Petone logo."
+      },
+      {
+        "type": "range",
+        "id": "logo_width",
+        "min": 80,
+        "max": 260,
+        "step": 5,
+        "unit": "px",
+        "label": "Logo width",
+        "default": 130
+      },
+      {
+        "type": "image_picker",
+        "id": "favicon",
+        "label": "Favicon",
+        "info": "32 x 32px .png recommended"
+      }
+    ]
+  },
+  {
+    "name": "Colors",
+    "settings": [
+      {
+        "type": "color",
+        "id": "color_dark",
+        "label": "Dark (brand black)",
+        "default": "#060709"
+      },
+      {
+        "type": "color",
+        "id": "color_accent",
+        "label": "Accent (brand green)",
+        "default": "#53BD8E"
+      },
+      {
+        "type": "color",
+        "id": "color_accent_hover",
+        "label": "Accent hover",
+        "default": "#3FA578"
+      },
+      {
+        "type": "color",
+        "id": "color_background",
+        "label": "Page background",
+        "default": "#FFFFFF"
+      },
+      {
+        "type": "color",
+        "id": "color_surface",
+        "label": "Soft surface (cards, light sections)",
+        "default": "#F2F5F3"
+      },
+      {
+        "type": "color",
+        "id": "color_text",
+        "label": "Body text",
+        "default": "#060709"
+      },
+      {
+        "type": "color",
+        "id": "color_sale",
+        "label": "Sale / discount badge",
+        "default": "#53BD8E"
+      }
+    ]
+  },
+  {
+    "name": "Typography",
+    "settings": [
+      {
+        "type": "font_picker",
+        "id": "font_heading",
+        "label": "Heading font",
+        "default": "poppins_n7"
+      },
+      {
+        "type": "font_picker",
+        "id": "font_body",
+        "label": "Body font",
+        "default": "poppins_n4"
+      },
+      {
+        "type": "range",
+        "id": "heading_scale",
+        "min": 80,
+        "max": 130,
+        "step": 5,
+        "unit": "%",
+        "label": "Heading size scale",
+        "default": 100
+      }
+    ]
+  },
+  {
+    "name": "Layout",
+    "settings": [
+      {
+        "type": "range",
+        "id": "page_width",
+        "min": 1000,
+        "max": 1600,
+        "step": 20,
+        "unit": "px",
+        "label": "Page width",
+        "default": 1360
+      },
+      {
+        "type": "range",
+        "id": "radius",
+        "min": 0,
+        "max": 32,
+        "step": 2,
+        "unit": "px",
+        "label": "Card corner radius",
+        "default": 20
+      },
+      {
+        "type": "range",
+        "id": "button_radius",
+        "min": 0,
+        "max": 40,
+        "step": 2,
+        "unit": "px",
+        "label": "Button corner radius",
+        "default": 40
+      }
+    ]
+  },
+  {
+    "name": "Product cards",
+    "settings": [
+      {
+        "type": "paragraph",
+        "content": "Add a product tag like badge:New, badge:Top 1 or badge:Just Launched to show a badge on product cards."
+      },
+      {
+        "type": "checkbox",
+        "id": "card_show_secondary_image",
+        "label": "Show second image on hover",
+        "default": true
+      },
+      {
+        "type": "checkbox",
+        "id": "card_show_savings",
+        "label": "Show savings message (e.g. Save $50)",
+        "default": true
+      }
+    ]
+  },
+  {
+    "name": "Cart",
+    "settings": [
+      {
+        "type": "select",
+        "id": "cart_type",
+        "label": "After adding to cart",
+        "options": [
+          { "value": "notification", "label": "Show notification" },
+          { "value": "page", "label": "Go to cart page" }
+        ],
+        "default": "notification"
+      }
+    ]
+  },
+  {
+    "name": "Social media",
+    "settings": [
+      { "type": "text", "id": "social_facebook", "label": "Facebook", "placeholder": "https://facebook.com/petone" },
+      { "type": "text", "id": "social_instagram", "label": "Instagram", "placeholder": "https://instagram.com/petone" },
+      { "type": "text", "id": "social_tiktok", "label": "TikTok", "placeholder": "https://tiktok.com/@petone" },
+      { "type": "text", "id": "social_youtube", "label": "YouTube", "placeholder": "https://youtube.com/@petone" },
+      { "type": "text", "id": "social_x", "label": "X (Twitter)", "placeholder": "https://x.com/petone" }
+    ]
+  }
+]

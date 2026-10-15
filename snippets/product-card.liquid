@@ -1,0 +1,35 @@
+{%- comment -%}
+  Accepts: product, show_price (bool), button_label (string), show_quick_add (bool)
+{%- endcomment -%}
+{%- liquid
+  assign btn_label = button_label | default: 'general.shop_now'
+  if button_label == blank
+    assign btn_label = 'general.shop_now' | t
+  endif
+-%}
+<div class="product-card">
+  <a href="{{ product.url }}" class="product-card__media{% if settings.card_show_secondary_image and product.media.size > 1 %} product-card__media--hover{% endif %}">
+    <div class="product-card__badges">
+      {%- render 'product-badge', product: product -%}
+      {%- render 'product-savings', product: product, style: 'percent' -%}
+    </div>
+    {%- if product.featured_media -%}
+      {{ product.featured_media | image_url: width: 900 | image_tag: loading: 'lazy', widths: '300, 450, 600, 900', sizes: '(min-width: 990px) 25vw, (min-width: 750px) 33vw, 70vw', class: 'product-card__img' }}
+      {%- if settings.card_show_secondary_image and product.media.size > 1 -%}
+        {{ product.media[1] | image_url: width: 900 | image_tag: loading: 'lazy', widths: '300, 450, 600, 900', sizes: '(min-width: 990px) 25vw, (min-width: 750px) 33vw, 70vw', class: 'product-card__img product-card__img--2' }}
+      {%- endif -%}
+    {%- else -%}
+      {{ 'product-1' | placeholder_svg_tag: 'placeholder product-card__img' }}
+    {%- endif -%}
+  </a>
+  <div class="product-card__info">
+    <h3 class="product-card__title"><a href="{{ product.url }}">{{ product.title | escape }}</a></h3>
+    {%- if settings.card_show_savings -%}
+      <div class="product-card__savings">{%- render 'product-savings', product: product, style: 'text' -%}</div>
+    {%- endif -%}
+    {%- if show_price -%}
+      {%- render 'price', product: product, use_variant: false -%}
+    {%- endif -%}
+    <a href="{{ product.url }}" class="button button--small button--dark product-card__btn">{{ btn_label }}</a>
+  </div>
+</div>

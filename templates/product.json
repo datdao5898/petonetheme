@@ -1,0 +1,21 @@
+{
+  "sections": {
+    "main": {
+      "type": "main-product",
+      "blocks": {
+        "p1": { "type": "perk", "settings": { "icon": "shipping", "text": "Free shipping on orders over $49" } },
+        "p2": { "type": "perk", "settings": { "icon": "trial", "text": "30-day risk-free trial" } },
+        "p3": { "type": "perk", "settings": { "icon": "warranty", "text": "Up to 2-year warranty" } }
+      },
+      "block_order": ["p1", "p2", "p3"],
+      "settings": {}
+    },
+    "related": {
+      "type": "product-tabs",
+      "blocks": { "r1": { "type": "tab", "settings": { "label": "You may also like" } } },
+      "block_order": ["r1"],
+      "settings": { "eyebrow": "More from Petone", "heading": "Complete the setup" }
+    }
+  },
+  "order": ["main", "related"]
+}

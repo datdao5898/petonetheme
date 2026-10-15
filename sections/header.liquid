@@ -1,7 +1,8 @@
 {%- liquid
   assign menu = section.settings.menu
 -%}
-<sticky-header class="header-wrapper scheme-{{ section.settings.scheme }}{% if section.settings.sticky %} header-wrapper--sticky{% endif %}">
+<sticky-header class="header-wrapper header-wrapper--{{ section.settings.layout }} scheme-{{ section.settings.scheme }}{% if section.settings.sticky %} header-wrapper--sticky{% endif %}{% if section.settings.overlay_hero %} header-wrapper--overlay{% endif %}">
+  <div class="header-bar">
   <header class="header page-width">
     <details class="menu-drawer" id="MenuDrawer">
       <summary class="header__icon header__icon--menu" aria-label="{{ 'general.menu' | t }}">
@@ -97,6 +98,7 @@
       {%- endif -%}
     </div>
   </header>
+  </div>
 </sticky-header>
 
 {% schema %}
@@ -121,9 +123,26 @@
       "default": "dark"
     },
     {
+      "type": "select",
+      "id": "layout",
+      "label": "Layout",
+      "options": [
+        { "value": "framed", "label": "Framed (expands to full width on scroll)" },
+        { "value": "full", "label": "Full width" }
+      ],
+      "default": "framed"
+    },
+    {
       "type": "checkbox",
       "id": "sticky",
       "label": "Sticky header",
+      "default": true
+    },
+    {
+      "type": "checkbox",
+      "id": "overlay_hero",
+      "label": "Overlay hero",
+      "info": "Header floats over the hero banner when it is the first section on the page.",
       "default": true
     },
     {

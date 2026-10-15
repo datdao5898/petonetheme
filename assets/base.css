@@ -156,11 +156,47 @@ p { margin: 0 0 1em; }
 /* ==========================================================================
    Header
    ========================================================================== */
-.header-wrapper { position: relative; z-index: 50; transition: box-shadow .25s; }
-.header-wrapper--sticky { position: sticky; top: 0; }
-.header-wrapper.scheme-dark { background: var(--color-dark); color: #fff; }
-.header-wrapper.scheme-light { background: #fff; color: var(--color-dark); border-bottom: 1px solid rgba(var(--color-dark-rgb), .08); }
-.header-wrapper.is-scrolled { box-shadow: 0 8px 30px rgba(0,0,0,.18); }
+.header-wrapper { --frame-gap: 10px; --ease: cubic-bezier(.4, 0, .2, 1); position: relative; z-index: 50; }
+/* Sticky must sit on the Shopify section wrapper — the custom element alone is as tall as its parent */
+.section-header { position: relative; z-index: 50; }
+.section-header:has(> .header-wrapper--sticky), .header-wrapper--sticky { position: sticky; top: 0; }
+.header-wrapper.scheme-dark { color: #fff; }
+.header-wrapper.scheme-light { color: var(--color-dark); }
+
+/* The bar is the visible box. Its background lives on ::before so backdrop-filter
+   doesn't become the containing block of the fixed mobile drawer. */
+.header-bar { position: relative; top: 0; isolation: isolate; width: 100%; max-width: 100%; margin: 0 auto; }
+.header-bar::before { content: ""; position: absolute; inset: 0; z-index: -1; border-radius: inherit; transition: background .5s var(--ease), box-shadow .5s var(--ease); }
+.scheme-dark .header-bar::before { background: var(--color-dark); }
+.scheme-light .header-bar::before { background: #fff; box-shadow: inset 0 -1px 0 rgba(var(--color-dark-rgb), .08); }
+.header-wrapper.is-scrolled .header-bar::before { box-shadow: 0 8px 30px rgba(0,0,0,.18); }
+
+/* Framed: floating rounded box, stretches to full width once the page scrolls.
+   Offset uses `top` (not margin/transform) so page flow never jumps and fixed children keep the viewport. */
+.header-wrapper--framed .header-bar {
+  top: var(--frame-gap); width: calc(100% - var(--frame-gap) * 2); max-width: calc(var(--page-width) - 40px);
+  border-radius: var(--radius);
+  transition: top .5s var(--ease), width .5s var(--ease), max-width .5s var(--ease), border-radius .5s var(--ease);
+}
+.section-header:has(> .header-wrapper--framed) { margin-bottom: 10px; }
+.header-wrapper--framed .header { min-height: 64px; }
+.header-wrapper--framed.scheme-light .header-bar::before { box-shadow: 0 6px 24px rgba(var(--color-dark-rgb), .1); }
+.header-wrapper--framed.is-scrolled .header-bar { top: 0; width: 100%; max-width: 100%; border-radius: 0; }
+@media (min-width: 990px) {
+  .header-wrapper { --frame-gap: 16px; }
+  .section-header:has(> .header-wrapper--framed) { margin-bottom: 16px; }
+  .header-wrapper--framed .header { min-height: 72px; }
+}
+
+/* Overlay: when the page opens with a hero, the header floats over it (translucent until scrolled) */
+body:has(#MainContent > .section-hero:first-child) .section-header:has(> .header-wrapper--overlay) { margin-bottom: calc(-1 * var(--header-height, 72px)); }
+body:has(#MainContent > .section-hero:first-child) #MainContent > .section-hero:first-child .hero__content { padding-top: calc(var(--header-height, 72px) + 56px); }
+body:has(#MainContent > .section-hero:first-child) .header-wrapper--overlay:not(.is-scrolled) .header-bar::before {
+  backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px);
+}
+body:has(#MainContent > .section-hero:first-child) .header-wrapper--overlay.scheme-dark:not(.is-scrolled) .header-bar::before { background: rgba(var(--color-dark-rgb), .5); box-shadow: inset 0 0 0 1px rgba(255,255,255,.1); }
+body:has(#MainContent > .section-hero:first-child) .header-wrapper--overlay.scheme-light:not(.is-scrolled) .header-bar::before { background: rgba(255,255,255,.75); }
+body:has(#MainContent > .section-hero:first-child) .header-wrapper--overlay.header-wrapper--full:not(.is-scrolled) .header-bar::before { box-shadow: none; }
 
 .header { display: grid; grid-template-columns: auto 1fr auto; align-items: center; gap: 16px; min-height: 76px; }
 .logo { display: block; }
@@ -228,6 +264,7 @@ p { margin: 0 0 1em; }
 /* Search */
 .header-search > summary { list-style: none; }
 .header-search__panel { position: absolute; left: 0; right: 0; width: 100%; top: 100%; background: inherit; padding: 16px 0 20px; border-top: 1px solid rgba(255,255,255,.08); }
+.header-wrapper--framed:not(.is-scrolled) .header-search__panel { top: calc(100% + 8px); border-top: 0; border-radius: var(--radius); box-shadow: 0 20px 50px rgba(0,0,0,.18); }
 .scheme-dark .header-search__panel { background: var(--color-dark); }
 .scheme-light .header-search__panel { background: #fff; }
 .search-form { display: flex; gap: 10px; }

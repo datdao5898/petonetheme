@@ -79,18 +79,18 @@ html = f'''<!doctype html><html class="no-js" lang="en"><head><meta charset="utf
 {css}</style>
 <script>document.documentElement.className='js';window.theme={{cartType:'notification',routes:{{cart:'/cart',cartAdd:'/cart/add'}},strings:{{}}}};</script></head><body>
 <div class="announcement scheme-accent"><div class="page-width announcement__inner"><announcement-rotator class="announcement__track" data-speed="5"><p class="announcement__msg is-active"><strong>Save up to 40%</strong> · Fall Sale · Smart care for happier pets</p><p class="announcement__msg">Free shipping on orders over $49 · 30-day risk-free trial</p></announcement-rotator></div></div>
-<sticky-header class="header-wrapper scheme-dark header-wrapper--sticky"><header class="header page-width">
+<div class="shopify-section section-header"><sticky-header class="header-wrapper header-wrapper--framed scheme-dark header-wrapper--sticky header-wrapper--overlay"><div class="header-bar"><header class="header page-width">
 <details class="menu-drawer"><summary class="header__icon header__icon--menu"><span class="icon-open">{icon("menu")}</span><span class="icon-close">{icon("close")}</span></summary><div class="menu-drawer__panel"><nav><ul class="menu-drawer__list" role="list">{drawer}</ul></nav><div class="menu-drawer__promo"><p><strong>Fall Sale</strong> — save up to 40% on smart pet care.</p></div><ul class="social-icons" role="list">{social}</ul></div></details>
 <a href="#" class="header__logo logo">{logo_img}</a>
 <nav class="header__nav"><ul class="header__menu" role="list">{nav}</ul></nav>
 <div class="header__icons"><details class="header-search"><summary class="header__icon">{icon("search")}</summary><div class="header-search__panel"><form class="search-form page-width"><input type="search" placeholder="Search products"><button class="button button--small">Search</button></form></div></details>
 <a href="#" class="header__icon">{icon("account")}</a><a href="#" class="header__icon header__icon--cart">{icon("cart")}<span class="cart-count" data-cart-count>2</span></a><a href="#" class="button button--small header__cta">Shop the sale</a></div>
-</header></sticky-header>
-<main>
-<section class="hero hero--large hero--align-left" style="--overlay:.35"><div class="hero__media">{hero_bg}</div>
+</header></div></sticky-header></div>
+<main id="MainContent">
+<div class="shopify-section section-hero"><section class="hero hero--large hero--align-left" style="--overlay:.35"><div class="hero__media">{hero_bg}</div>
 <div class="hero__content page-width"><div class="hero__text"><p class="eyebrow">{icon("paw")} Smart pet tech for modern homes</p><h1 class="hero__heading h-display">Smarter care. <em>Happier pets.</em></h1><p class="hero__sub">Self-cleaning litter boxes, smart fountains and feeders that take care of the daily chores — so you can enjoy more time with your pet.</p>
 <div class="button-row"><a href="#" class="button button--large">Shop the sale {icon("arrow-right")}</a><a href="#" class="button button--large button--ghost">Why Petone</a></div></div>
-<div class="hero__promo"><span class="badge badge--accent">Fall Sale</span><p class="hero__promo-heading">Settle into fall. Keep it fresh.</p><p class="hero__promo-amount">Save up to $400</p><a href="#" class="hero__promo-link">Shop bundles {icon("arrow-right")}</a></div></div></section>
+<div class="hero__promo"><span class="badge badge--accent">Fall Sale</span><p class="hero__promo-heading">Settle into fall. Keep it fresh.</p><p class="hero__promo-amount">Save up to $400</p><a href="#" class="hero__promo-link">Shop bundles {icon("arrow-right")}</a></div></div></section></div>
 <section class="section trust-bar bg-white" style="--pt:28px;--pb:28px"><div class="page-width"><ul class="trust-bar__list" role="list">{thtml}</ul></div></section>
 <section class="section bundles bg-white" style="--pt:80px;--pb:80px"><div class="page-width"><div class="section-head"><div><p class="eyebrow">Bundle &amp; save</p><h2 class="h1">Choose your pet care bundle</h2><p class="section-head__text">Hand-picked combos that work better together — and cost less.</p></div><a href="#" class="link-arrow">View all bundles {icon("arrow-right")}</a></div>
 <div class="bundles__grid scroller" style="--cols:4">{bhtml}</div></div></section>

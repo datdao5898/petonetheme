@@ -25,14 +25,22 @@
   /* ---------- Sticky header ---------- */
   class StickyHeader extends HTMLElement {
     connectedCallback() {
+      const root = document.documentElement;
+      const bar = this.querySelector('.header-bar') || this;
       this.onScroll = () => {
         this.classList.toggle('is-scrolled', window.scrollY > 10);
-        const rect = this.getBoundingClientRect();
-        document.documentElement.style.setProperty('--header-bottom', Math.max(rect.bottom, 0) + 'px');
+        root.style.setProperty('--header-bottom', Math.max(bar.getBoundingClientRect().bottom, 0) + 'px');
+      };
+      // Flow height of the header (used to pull a hero up underneath it); the framed offset doesn't change it
+      this.onResize = () => {
+        root.style.setProperty('--header-height', this.offsetHeight + 'px');
+        this.onScroll();
       };
       window.addEventListener('scroll', this.onScroll, { passive: true });
-      window.addEventListener('resize', this.onScroll);
-      this.onScroll();
+      window.addEventListener('resize', this.onResize);
+      // The framed bar animates to the top; re-measure the drawer offset once it settles
+      bar.addEventListener('transitionend', this.onScroll);
+      this.onResize();
 
       // Close other <details> panels when one opens; lock scroll for the drawer
       this.querySelectorAll('details').forEach((d) => {
@@ -51,7 +59,7 @@
     }
     disconnectedCallback() {
       window.removeEventListener('scroll', this.onScroll);
-      window.removeEventListener('resize', this.onScroll);
+      window.removeEventListener('resize', this.onResize);
     }
   }
   if (!customElements.get('sticky-header')) customElements.define('sticky-header', StickyHeader);

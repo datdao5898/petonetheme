@@ -166,7 +166,7 @@ p { margin: 0 0 1em; }
 /* The bar is the visible box. Its background lives on ::before so backdrop-filter
    doesn't become the containing block of the fixed mobile drawer. */
 .header-bar { position: relative; top: 0; isolation: isolate; width: 100%; max-width: 100%; margin: 0 auto; }
-.header-bar::before { content: ""; position: absolute; inset: 0; z-index: -1; border-radius: inherit; transition: background .5s var(--ease), box-shadow .5s var(--ease); }
+.header-bar::before { content: ""; position: absolute; inset: 0; z-index: -1; border-radius: inherit; transition: background-color .5s var(--ease), box-shadow .5s var(--ease), backdrop-filter .5s var(--ease); }
 .scheme-dark .header-bar::before { background: var(--color-dark); }
 .scheme-light .header-bar::before { background: #fff; box-shadow: inset 0 -1px 0 rgba(var(--color-dark-rgb), .08); }
 .header-wrapper.is-scrolled .header-bar::before { box-shadow: 0 8px 30px rgba(0,0,0,.18); }
@@ -182,6 +182,26 @@ p { margin: 0 0 1em; }
 .header-wrapper--framed .header { min-height: 64px; }
 .header-wrapper--framed.scheme-light .header-bar::before { box-shadow: 0 6px 24px rgba(var(--color-dark-rgb), .1); }
 .header-wrapper--framed.is-scrolled .header-bar { top: 0; width: 100%; max-width: 100%; border-radius: 0; }
+
+/* Liquid glass once scrolled: translucent tint + heavy blur/saturation, a light sheen and
+   specular edges. --glass-alpha comes from the "Glass tint" setting. */
+.header-wrapper.is-scrolled .header-bar::before {
+  backdrop-filter: blur(22px) saturate(180%); -webkit-backdrop-filter: blur(22px) saturate(180%);
+}
+.header-wrapper.scheme-dark.is-scrolled .header-bar::before {
+  background-color: rgba(var(--color-dark-rgb), var(--glass-alpha, .5));
+  background-image: linear-gradient(180deg, rgba(255,255,255,.12) 0%, rgba(255,255,255,.03) 55%, rgba(255,255,255,0) 100%);
+  box-shadow: inset 0 1px 0 rgba(255,255,255,.22), inset 0 -1px 0 rgba(255,255,255,.08), 0 10px 32px rgba(0,0,0,.22);
+}
+.header-wrapper.scheme-light.is-scrolled .header-bar::before {
+  background-color: rgba(255,255,255, var(--glass-alpha, .5));
+  background-image: linear-gradient(180deg, rgba(255,255,255,.55) 0%, rgba(255,255,255,0) 100%);
+  box-shadow: inset 0 1px 0 rgba(255,255,255,.9), inset 0 -1px 0 rgba(var(--color-dark-rgb), .06), 0 10px 32px rgba(var(--color-dark-rgb), .1);
+}
+@supports not ((backdrop-filter: blur(1px)) or (-webkit-backdrop-filter: blur(1px))) {
+  .header-wrapper.scheme-dark.is-scrolled .header-bar::before { background-color: rgba(var(--color-dark-rgb), .94); }
+  .header-wrapper.scheme-light.is-scrolled .header-bar::before { background-color: rgba(255,255,255,.96); }
+}
 @media (min-width: 990px) {
   .header-wrapper { --frame-gap: 16px; }
   .section-header:has(> .header-wrapper--framed) { margin-bottom: 16px; }

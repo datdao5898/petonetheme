@@ -1,7 +1,7 @@
 {%- liquid
   assign menu = section.settings.menu
 -%}
-<sticky-header class="header-wrapper header-wrapper--{{ section.settings.layout }} scheme-{{ section.settings.scheme }}{% if section.settings.sticky %} header-wrapper--sticky{% endif %}{% if section.settings.overlay_hero %} header-wrapper--overlay{% endif %}">
+<sticky-header class="header-wrapper header-wrapper--{{ section.settings.layout }} scheme-{{ section.settings.scheme }}{% if section.settings.sticky %} header-wrapper--sticky{% endif %}{% if section.settings.overlay_hero %} header-wrapper--overlay{% endif %}" style="--glass-alpha: {{ section.settings.glass_opacity | divided_by: 100.0 }};">
   <div class="header-bar">
   <header class="header page-width">
     <details class="menu-drawer" id="MenuDrawer">
@@ -131,6 +131,17 @@
         { "value": "full", "label": "Full width" }
       ],
       "default": "framed"
+    },
+    {
+      "type": "range",
+      "id": "glass_opacity",
+      "label": "Glass tint when scrolled",
+      "info": "Lower = more see-through glass, higher = more solid.",
+      "min": 20,
+      "max": 90,
+      "step": 5,
+      "unit": "%",
+      "default": 50
     },
     {
       "type": "checkbox",

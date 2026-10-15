@@ -1,0 +1,125 @@
+{%- comment -%}
+  Full-bleed product spotlights that stack while scrolling: each card sticks under the header
+  and the next one slides over it while the previous shrinks back (driven by theme.js `stack-cards`).
+{%- endcomment -%}
+<section class="section spotlight-stack bg-{{ section.settings.background }}" style="--pt: {{ section.settings.padding_top }}px; --pb: {{ section.settings.padding_bottom }}px;">
+  {%- if section.settings.heading != blank or section.settings.eyebrow != blank -%}
+    <div class="page-width">
+      <div class="section-head">
+        <div>
+          {%- if section.settings.eyebrow != blank -%}<p class="eyebrow">{{ section.settings.eyebrow | escape }}</p>{%- endif -%}
+          {%- if section.settings.heading != blank -%}<h2 class="h1">{{ section.settings.heading }}</h2>{%- endif -%}
+        </div>
+      </div>
+    </div>
+  {%- endif -%}
+
+  <stack-cards class="spotlight-stack__list page-width">
+    {%- for block in section.blocks -%}
+      {%- assign b = block.settings -%}
+      <article class="spotlight spotlight--{{ b.scheme }} spotlight--text-{{ b.text_side }}" style="--i: {{ forloop.index0 }};" data-stack-card {{ block.shopify_attributes }}>
+        <div class="spotlight__media">
+          {%- if b.image != blank -%}
+            {%- assign desktop_class = 'spotlight__img' -%}
+            {%- if b.image_mobile != blank -%}
+              {%- assign desktop_class = 'spotlight__img spotlight__img--desktop' -%}
+              {{ b.image_mobile | image_url: width: 1100 | image_tag: class: 'spotlight__img spotlight__img--mobile', loading: 'lazy', widths: '550, 750, 1100', sizes: '100vw' }}
+            {%- endif -%}
+            {{ b.image | image_url: width: 2400 | image_tag: class: desktop_class, loading: 'lazy', widths: '750, 1100, 1500, 1920, 2400', sizes: '(min-width: 1400px) 1360px, 100vw' }}
+          {%- else -%}
+            {%- capture ph -%}lifestyle-{% cycle '1', '2' %}{%- endcapture -%}
+            {{ ph | placeholder_svg_tag: 'placeholder spotlight__img' }}
+          {%- endif -%}
+        </div>
+
+        <span class="spotlight__index" aria-hidden="true">{{ forloop.index | prepend: '0' | slice: -2, 2 }}</span>
+
+        <div class="spotlight__content">
+          {%- if b.badge != blank -%}<span class="badge badge--accent">{{ b.badge | escape }}</span>{%- endif -%}
+          {%- if b.kicker != blank -%}<p class="spotlight__kicker">{{ b.kicker | escape }}</p>{%- endif -%}
+          {%- if b.heading != blank -%}<h3 class="spotlight__heading">{{ b.heading }}</h3>{%- endif -%}
+          {%- if b.offer != blank -%}<p class="spotlight__offer">{{ b.offer }}</p>{%- endif -%}
+          {%- if b.button_label != blank or b.button2_label != blank -%}
+            <div class="button-row">
+              {%- if b.button_label != blank -%}
+                <a href="{{ b.button_link }}" class="button {% if b.scheme == 'accent' %}button--dark{% else %}button--accent{% endif %}">{{ b.button_label | escape }} {% render 'icon', icon: 'arrow-right' %}</a>
+              {%- endif -%}
+              {%- if b.button2_label != blank -%}
+                <a href="{{ b.button2_link }}" class="button spotlight__ghost"{% if b.button2_new_tab %} target="_blank" rel="noopener"{% endif %}>{% render 'icon', icon: 'play' %} {{ b.button2_label | escape }}</a>
+              {%- endif -%}
+            </div>
+          {%- endif -%}
+        </div>
+      </article>
+    {%- endfor -%}
+  </stack-cards>
+</section>
+
+{% schema %}
+{
+  "name": "Spotlight stack",
+  "class": "section-spotlight-stack",
+  "max_blocks": 6,
+  "settings": [
+    { "type": "text", "id": "eyebrow", "label": "Eyebrow", "default": "In the spotlight" },
+    { "type": "inline_richtext", "id": "heading", "label": "Heading", "default": "New tech for <em>happier homes</em>" },
+    {
+      "type": "select", "id": "background", "label": "Background",
+      "options": [
+        { "value": "white", "label": "White" },
+        { "value": "surface", "label": "Soft gray" },
+        { "value": "dark", "label": "Black" }
+      ],
+      "default": "surface"
+    },
+    { "type": "range", "id": "padding_top", "label": "Top padding", "min": 0, "max": 120, "step": 4, "unit": "px", "default": 80 },
+    { "type": "range", "id": "padding_bottom", "label": "Bottom padding", "min": 0, "max": 120, "step": 4, "unit": "px", "default": 80 }
+  ],
+  "blocks": [
+    {
+      "type": "spotlight",
+      "name": "Spotlight",
+      "settings": [
+        { "type": "image_picker", "id": "image", "label": "Image", "info": "2400 x 1200px recommended" },
+        { "type": "image_picker", "id": "image_mobile", "label": "Mobile image", "info": "Optional. 1100 x 1400px recommended" },
+        {
+          "type": "select", "id": "scheme", "label": "Color",
+          "options": [
+            { "value": "dark", "label": "Dark text panel" },
+            { "value": "light", "label": "Light text panel" },
+            { "value": "accent", "label": "Green text panel" }
+          ],
+          "default": "dark"
+        },
+        {
+          "type": "select", "id": "text_side", "label": "Text position",
+          "options": [
+            { "value": "left", "label": "Left" },
+            { "value": "right", "label": "Right" }
+          ],
+          "default": "left"
+        },
+        { "type": "text", "id": "badge", "label": "Badge", "default": "Just launched" },
+        { "type": "text", "id": "kicker", "label": "Kicker", "default": "Petone Smart Series" },
+        { "type": "inline_richtext", "id": "heading", "label": "Heading", "default": "Self-cleaning <em>litter box</em>" },
+        { "type": "inline_richtext", "id": "offer", "label": "Offer line", "default": "Save $120 · Limited-time deal" },
+        { "type": "text", "id": "button_label", "label": "Button label", "default": "Shop now" },
+        { "type": "url", "id": "button_link", "label": "Button link", "default": "/collections/all" },
+        { "type": "text", "id": "button2_label", "label": "Second button label", "default": "Watch demo" },
+        { "type": "url", "id": "button2_link", "label": "Second button link", "info": "e.g. a YouTube video" },
+        { "type": "checkbox", "id": "button2_new_tab", "label": "Open second link in new tab", "default": true }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Spotlight stack",
+      "blocks": [
+        { "type": "spotlight" },
+        { "type": "spotlight", "settings": { "scheme": "light", "text_side": "right", "badge": "New", "heading": "Smart <em>water fountain</em>", "offer": "Up to $40 off · Exclusive savings" } },
+        { "type": "spotlight", "settings": { "scheme": "accent", "badge": "Best seller", "heading": "App-controlled <em>feeder</em>", "offer": "Save $60 · This week only" } }
+      ]
+    }
+  ]
+}
+{% endschema %}

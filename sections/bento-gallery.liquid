@@ -1,0 +1,127 @@
+{%- comment -%}
+  Asymmetric bento mosaic. Each tile picks a size (large / tall / wide / small) and a style:
+  an image tile with a glass caption, or a solid accent / dark tile for a big statement or stat.
+{%- endcomment -%}
+<section class="section bento bg-{{ section.settings.background }}" style="--pt: {{ section.settings.padding_top }}px; --pb: {{ section.settings.padding_bottom }}px;">
+  <div class="page-width">
+    {%- if section.settings.heading != blank or section.settings.eyebrow != blank -%}
+      <div class="section-head">
+        <div>
+          {%- if section.settings.eyebrow != blank -%}<p class="eyebrow">{{ section.settings.eyebrow | escape }}</p>{%- endif -%}
+          {%- if section.settings.heading != blank -%}<h2 class="h1">{{ section.settings.heading }}</h2>{%- endif -%}
+          {%- if section.settings.text != blank -%}<p class="section-head__text">{{ section.settings.text }}</p>{%- endif -%}
+        </div>
+        {%- if section.settings.link_label != blank -%}
+          <a href="{{ section.settings.link }}" class="link-arrow">{{ section.settings.link_label | escape }} {% render 'icon', icon: 'arrow-right' %}</a>
+        {%- endif -%}
+      </div>
+    {%- endif -%}
+
+    <div class="bento__grid">
+      {%- for block in section.blocks -%}
+        {%- assign b = block.settings -%}
+        {%- if b.link != blank -%}{%- assign tag = 'a' -%}{%- else -%}{%- assign tag = 'div' -%}{%- endif -%}
+        <{{ tag }}{% if b.link != blank %} href="{{ b.link }}"{% endif %} class="bento-tile bento-tile--{{ b.size }} bento-tile--{{ b.style }}" {{ block.shopify_attributes }}>
+          {%- if b.style == 'image' -%}
+            <div class="bento-tile__media">
+              {%- if b.image != blank -%}
+                {%- if b.size == 'large' or b.size == 'wide' -%}
+                  {%- assign sizes = '(min-width: 990px) 50vw, 100vw' -%}
+                {%- else -%}
+                  {%- assign sizes = '(min-width: 990px) 25vw, 50vw' -%}
+                {%- endif -%}
+                {{ b.image | image_url: width: 1600 | image_tag: loading: 'lazy', widths: '400, 600, 900, 1200, 1600', sizes: sizes }}
+              {%- else -%}
+                {%- capture ph -%}lifestyle-{% cycle '1', '2' %}{%- endcapture -%}
+                {{ ph | placeholder_svg_tag: 'placeholder' }}
+              {%- endif -%}
+            </div>
+          {%- endif -%}
+
+          <div class="bento-tile__body">
+            {%- if b.label != blank -%}<span class="bento-tile__label">{{ b.label | escape }}</span>{%- endif -%}
+            {%- if b.big_text != blank -%}<span class="bento-tile__big">{{ b.big_text | escape }}</span>{%- endif -%}
+            {%- if b.heading != blank -%}<h3 class="bento-tile__heading">{{ b.heading }}</h3>{%- endif -%}
+            {%- if b.text != blank -%}<p class="bento-tile__text">{{ b.text }}</p>{%- endif -%}
+          </div>
+
+          {%- if b.link != blank -%}
+            <span class="bento-tile__arrow" aria-hidden="true">{% render 'icon', icon: 'arrow-right' %}</span>
+          {%- endif -%}
+        </{{ tag }}>
+      {%- endfor -%}
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Bento gallery",
+  "class": "section-bento",
+  "max_blocks": 8,
+  "settings": [
+    { "type": "text", "id": "eyebrow", "label": "Eyebrow", "default": "Life with Petone" },
+    { "type": "inline_richtext", "id": "heading", "label": "Heading", "default": "Made for the way <em>pets live</em>" },
+    { "type": "inline_richtext", "id": "text", "label": "Text" },
+    { "type": "text", "id": "link_label", "label": "Link label", "default": "Explore all" },
+    { "type": "url", "id": "link", "label": "Link", "default": "/collections/all" },
+    {
+      "type": "select", "id": "background", "label": "Background",
+      "options": [
+        { "value": "white", "label": "White" },
+        { "value": "surface", "label": "Soft gray" },
+        { "value": "dark", "label": "Black" }
+      ],
+      "default": "white"
+    },
+    { "type": "range", "id": "padding_top", "label": "Top padding", "min": 0, "max": 120, "step": 4, "unit": "px", "default": 80 },
+    { "type": "range", "id": "padding_bottom", "label": "Bottom padding", "min": 0, "max": 120, "step": 4, "unit": "px", "default": 80 }
+  ],
+  "blocks": [
+    {
+      "type": "tile",
+      "name": "Tile",
+      "settings": [
+        {
+          "type": "select", "id": "size", "label": "Size",
+          "options": [
+            { "value": "large", "label": "Large (2 x 2)" },
+            { "value": "tall", "label": "Tall (1 x 2)" },
+            { "value": "wide", "label": "Wide (2 x 1)" },
+            { "value": "small", "label": "Small (1 x 1)" }
+          ],
+          "default": "small"
+        },
+        {
+          "type": "select", "id": "style", "label": "Style",
+          "options": [
+            { "value": "image", "label": "Image" },
+            { "value": "accent", "label": "Green statement" },
+            { "value": "dark", "label": "Black statement" }
+          ],
+          "default": "image"
+        },
+        { "type": "image_picker", "id": "image", "label": "Image", "info": "Used by the Image style" },
+        { "type": "text", "id": "label", "label": "Label", "default": "Litter care" },
+        { "type": "text", "id": "big_text", "label": "Big number or word", "info": "e.g. 99% or 24/7 — best on statement tiles" },
+        { "type": "inline_richtext", "id": "heading", "label": "Heading", "default": "Fresh, every single day" },
+        { "type": "inline_richtext", "id": "text", "label": "Text" },
+        { "type": "url", "id": "link", "label": "Link" }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Bento gallery",
+      "blocks": [
+        { "type": "tile", "settings": { "size": "large", "label": "Litter care", "heading": "Scoop-free mornings" } },
+        { "type": "tile", "settings": { "size": "small", "style": "accent", "label": "Odor control", "big_text": "99%", "heading": "fewer odors at home" } },
+        { "type": "tile", "settings": { "size": "tall", "label": "Hydration", "heading": "Fresh water, all day" } },
+        { "type": "tile", "settings": { "size": "small", "label": "Feeding", "heading": "Meals on schedule" } },
+        { "type": "tile", "settings": { "size": "wide", "label": "Grooming", "heading": "Less fur, more cuddles" } },
+        { "type": "tile", "settings": { "size": "wide", "style": "dark", "label": "Peace of mind", "big_text": "24/7", "heading": "App alerts wherever you are" } }
+      ]
+    }
+  ]
+}
+{% endschema %}

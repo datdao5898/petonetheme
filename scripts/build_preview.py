@@ -95,6 +95,61 @@ hero_html = ('<hero-slider class="hero hero--large hero--has-controls" style="--
   f'<div class="hero__extras page-width"><div class="hero__promo"><span class="badge badge--accent">Fall Sale</span><p class="hero__promo-heading">Settle into fall. Keep it fresh.</p><p class="hero__promo-amount">Save up to $400</p><a href="#" class="hero__promo-link">Shop bundles {icon("arrow-right")}</a></div></div>'
   '</hero-slider>')
 
+# Image sections (mirrors of spotlight-stack / bento-gallery / shop-the-look)
+def scene(kind, c1, c2, x=62, scale=1.6, cls=''):
+    inner = prod(kind).split('>', 1)[1].rsplit('</svg>', 1)[0]
+    return (f'<svg class="{cls}" viewBox="0 0 1600 900" preserveAspectRatio="xMidYMid slice" style="width:100%;height:100%">'
+            f'<rect width="1600" height="900" fill="{c2}"/><circle cx="{x*16}" cy="430" r="520" fill="{c1}" opacity=".55"/>'
+            f'<g transform="translate({x*16-200*scale},{450-200*scale}) scale({scale})">{inner}</g></svg>')
+
+spots = [('litter', 'dark', 'left', 'Just launched', 'Petone Smart Series', 'Self-cleaning <em>litter box</em>', 'Save $120 · Limited-time deal', '#2f6b52', '#0c1411', 70),
+         ('fountain', 'light', 'right', 'New', 'Petone Hydra', 'Smart <em>water fountain</em>', 'Up to $40 off · Exclusive savings', '#cfe9dc', '#9fb8ad', 30),
+         ('feeder', 'accent', 'left', 'Best seller', 'Petone Feast', 'App-controlled <em>feeder</em>', 'Save $60 · This week only', '#53BD8E', '#1d3a2e', 70)]
+spot_cards = ''
+for i, (k, sch, side, badge, kick, h, offer, c1, c2, x) in enumerate(spots):
+    b1 = 'button--dark' if sch == 'accent' else 'button--accent'
+    spot_cards += (f'<article class="spotlight spotlight--{sch} spotlight--text-{side}" data-stack-card><div class="spotlight__media">{scene(k, c1, c2, x, 1.7, "spotlight__img")}</div>'
+                   f'<span class="spotlight__index" aria-hidden="true">0{i+1}</span><div class="spotlight__content"><span class="badge badge--accent">{badge}</span><p class="spotlight__kicker">{kick}</p>'
+                   f'<h3 class="spotlight__heading">{h}</h3><p class="spotlight__offer">{offer}</p><div class="button-row"><a href="#" class="button {b1}">Shop now {icon("arrow-right")}</a>'
+                   f'<a href="#" class="button spotlight__ghost">{icon("play")} Watch demo</a></div></div></article>')
+spot_html = ('<section class="section spotlight-stack bg-surface" style="--pt:80px;--pb:80px"><div class="page-width"><div class="section-head"><div><p class="eyebrow">In the spotlight</p>'
+             '<h2 class="h1">New tech for <em>happier homes</em></h2></div></div></div>'
+             f'<stack-cards class="spotlight-stack__list page-width">{spot_cards}</stack-cards></section>')
+
+tiles = [('large', 'image', 'litter', 'Litter care', '', 'Scoop-free <em>mornings</em>', '#2f6b52', '#0c1411'),
+         ('small', 'accent', None, 'Odor control', '99%', 'fewer odors at home', '', ''),
+         ('tall', 'image', 'fountain', 'Hydration', '', 'Fresh water, all day', '#cfe9dc', '#7f9a8e'),
+         ('small', 'dark', None, 'Peace of mind', '24/7', 'App alerts anywhere', '', ''),
+         ('wide', 'image', 'feeder', 'Feeding', '', 'Meals right on schedule', '#e3d2bb', '#a98f6f'),
+         ('wide', 'image', 'dryer', 'Grooming', '', 'Less fur, <em>more cuddles</em>', '#53BD8E', '#183126')]
+tile_html = ''
+for size, style, k, label, big, h, c1, c2 in tiles:
+    media = f'<div class="bento-tile__media">{scene(k, c1, c2, 50, 1.9)}</div>' if style == 'image' else ''
+    bigs = f'<span class="bento-tile__big">{big}</span>' if big else ''
+    arrow = f'<span class="bento-tile__arrow" aria-hidden="true">{icon("arrow-right")}</span>' if style == 'image' else ''
+    tag = 'a href="#"' if style == 'image' else 'div'
+    end = 'a' if style == 'image' else 'div'
+    tile_html += (f'<{tag} class="bento-tile bento-tile--{size} bento-tile--{style}">{media}<div class="bento-tile__body"><span class="bento-tile__label">{label}</span>{bigs}'
+                  f'<h3 class="bento-tile__heading">{h}</h3></div>{arrow}</{end}>')
+bento_html = ('<section class="section bento bg-white" style="--pt:80px;--pb:80px"><div class="page-width"><div class="section-head"><div><p class="eyebrow">Life with Petone</p>'
+              f'<h2 class="h1">Made for the way <em>pets live</em></h2></div><a href="#" class="link-arrow">Explore all {icon("arrow-right")}</a></div>'
+              f'<div class="bento__grid">{tile_html}</div></div></section>')
+
+look_items = [('litter', 'SNOW+ Self-Cleaning Litter Box', '$599', '$769', 68, 62), ('fountain', 'Hydra Smart Fountain', '$89', '', 30, 70), ('feeder', 'Feast App Feeder', '$129', '$159', 46, 40)]
+look_svg = ('<svg viewBox="0 0 1000 800" preserveAspectRatio="xMidYMid slice"><rect width="1000" height="800" fill="#1d2a24"/><rect y="520" width="1000" height="280" fill="#2b3a33"/>'
+            '<circle cx="760" cy="200" r="260" fill="#53BD8E" opacity=".18"/>'
+            + ''.join(f'<g transform="translate({x*10-110},{y*8-110}) scale(.55)">{prod(k).split(">", 1)[1].rsplit("</svg>", 1)[0]}</g>' for k, _, _, _, x, y in look_items) + '</svg>')
+dots = ''.join(f'<button type="button" class="look__dot{" is-active" if i == 0 else ""}" style="--x:{x}%;--y:{y}%" data-look-dot="{i}"><span class="look__dot-num">{i+1}</span>'
+               f'<span class="look__dot-tip{" look__dot-tip--left" if x > 60 else ""}">{t}</span></button>' for i, (k, t, p, c, x, y) in enumerate(look_items))
+items = ''.join(f'<li class="look-item{" is-active" if i == 0 else ""}" data-look-item="{i}"><a href="#" class="look-item__link"><span class="look-item__num">{i+1}</span>'
+                f'<span class="look-item__media">{prod(k)}</span><span class="look-item__info"><span class="look-item__title">{t}</span>'
+                f'<div class="price{" price--on-sale" if c else ""}"><span class="price__current">{p}</span>{f"<s class=price__compare>{c}</s>" if c else ""}</div></span>'
+                f'<span class="look-item__arrow">{icon("arrow-right")}</span></a></li>' for i, (k, t, p, c, x, y) in enumerate(look_items))
+look_html = ('<section class="section look bg-dark" style="--pt:80px;--pb:80px"><look-hotspots class="look__layout look__layout--image-left page-width">'
+             f'<div class="look__stage"><div class="look__media">{look_svg}</div>{dots}</div>'
+             '<div class="look__panel"><p class="eyebrow">Shop the look</p><h2 class="h1">A smarter corner <em>for every pet</em></h2><p class="look__text">Tap the dots to see what makes this setup tick.</p>'
+             f'<ol class="look__list scroller" role="list">{items}</ol><a href="#" class="button button--accent look__cta">Shop the full setup {icon("arrow-right")}</a></div></look-hotspots></section>')
+
 html = f'''<!doctype html><html class="no-js" lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Petone — preview</title>
 <style>:root{{--color-dark:#060709;--color-dark-rgb:6,7,9;--color-accent:#53BD8E;--color-accent-rgb:83,189,142;--color-accent-hover:#3FA578;--color-bg:#fff;--color-surface:#F2F5F3;--color-text:#060709;--color-text-rgb:6,7,9;--color-sale:#53BD8E;--font-heading:Poppins,sans-serif;--font-heading-weight:700;--font-body:Poppins,sans-serif;--font-body-weight:400;--font-body-weight-bold:700;--heading-scale:1;--page-width:1360px;--radius:20px;--radius-btn:40px;--logo-width:130px}}
 {css}</style>
@@ -117,10 +172,13 @@ html = f'''<!doctype html><html class="no-js" lang="en"><head><meta charset="utf
 <div class="tab-panel is-active" role="tabpanel"><div class="carousel scroller" data-carousel>{phtml}</div></div>
 <div class="tab-panel" role="tabpanel" hidden><div class="carousel scroller" data-carousel>{phtml}</div></div><div class="tab-panel" role="tabpanel" hidden><div class="carousel scroller" data-carousel>{phtml}</div></div><div class="tab-panel" role="tabpanel" hidden><div class="carousel scroller" data-carousel>{phtml}</div></div>
 </tabs-component></section>
+{spot_html}
+{bento_html}
 <section class="section brand-story bg-dark" style="--pt:88px;--pb:88px"><div class="page-width"><div class="section-head section-head--center"><div><p class="eyebrow">Why Petone</p><h2 class="h1">Smart pet tech, made with love</h2><p class="section-head__text">Designed by pet parents and engineers to make everyday care effortless, hygienic and safe.</p></div></div>
 <div class="stats"><div class="stat"><span class="stat__value">50,000+</span><span class="stat__label">Happy pets</span></div><div class="stat"><span class="stat__value">4.8★</span><span class="stat__label">Average rating</span></div><div class="stat"><span class="stat__value">2-year</span><span class="stat__label">Warranty</span></div><div class="stat"><span class="stat__value">24/7</span><span class="stat__label">Pet parent support</span></div></div>
 <div class="story-grid story-grid--wide-left"><article class="story-panel"><div class="story-panel__media">{story1}</div><a class="story-panel__play" href="#">{icon("play")}</a><div class="story-panel__content"><p class="eyebrow">Our story</p><h3 class="h2">Built for pets. Trusted by families.</h3><div class="rte"><p>From smart litter boxes to filtered fountains, every Petone product is tested for safety, quietness and durability.</p></div><a href="#" class="button button--accent">Learn more {icon("arrow-right")}</a></div></article>
 <article class="story-panel"><div class="story-panel__media">{story2}</div><div class="story-panel__content"><p class="eyebrow">Partner with us</p><h3 class="h2">Creators &amp; media</h3><div class="rte"><p>Love pets and tech? Join the Petone partner program and grow with us.</p></div><a href="#" class="button button--white">Partner with us {icon("arrow-right")}</a></div></article></div></div></section>
+{look_html}
 <section class="section faq bg-white" style="--pt:88px;--pb:88px"><div class="page-width faq__inner"><div class="faq__intro"><p class="eyebrow">FAQ</p><h2 class="h1">Everything about Petone</h2><div class="rte"><p>Can't find what you're looking for? Our pet parent support team is happy to help.</p></div><a href="#" class="button button--dark">Contact us</a></div><div class="faq__list">{fhtml}</div></div></section>
 </main>
 <footer class="footer"><div class="page-width"><div class="footer__top"><div class="footer__brand"><a href="#" class="logo footer__logo">{logo_img}</a><div class="footer__about rte"><p>Smart pet tech for modern homes. Less chores, more cuddles.</p></div><ul class="social-icons" role="list">{social}</ul></div>

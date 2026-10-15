@@ -1,0 +1,136 @@
+{%- comment -%}
+  Lifestyle image with numbered hotspots linked to a product list (theme.js `look-hotspots`):
+  hovering / tapping a dot highlights its product and vice versa.
+{%- endcomment -%}
+{%- assign s = section.settings -%}
+<section class="section look bg-{{ s.background }}" style="--pt: {{ s.padding_top }}px; --pb: {{ s.padding_bottom }}px;">
+  <look-hotspots class="look__layout look__layout--image-{{ s.image_side }} page-width">
+    <div class="look__stage">
+      <div class="look__media">
+        {%- if s.image != blank -%}
+          {{ s.image | image_url: width: 2000 | image_tag: loading: 'lazy', widths: '600, 900, 1200, 1600, 2000', sizes: '(min-width: 990px) 62vw, 100vw' }}
+        {%- else -%}
+          {{ 'lifestyle-1' | placeholder_svg_tag: 'placeholder' }}
+        {%- endif -%}
+      </div>
+      {%- for block in section.blocks -%}
+        {%- liquid
+          assign b = block.settings
+          assign p = b.product
+          if p != blank
+            assign name = p.title
+          else
+            assign name = b.title
+          endif
+        -%}
+        <button
+          type="button"
+          class="look__dot{% if forloop.first %} is-active{% endif %}"
+          style="--x: {{ b.x }}%; --y: {{ b.y }}%;"
+          data-look-dot="{{ forloop.index0 }}"
+          aria-label="{{ forloop.index }}. {{ name | escape }}"
+          {{ block.shopify_attributes }}
+        >
+          <span class="look__dot-num">{{ forloop.index }}</span>
+          <span class="look__dot-tip{% if b.x > 60 %} look__dot-tip--left{% endif %}" aria-hidden="true">{{ name | escape }}</span>
+        </button>
+      {%- endfor -%}
+    </div>
+
+    <div class="look__panel">
+      {%- if s.eyebrow != blank -%}<p class="eyebrow">{{ s.eyebrow | escape }}</p>{%- endif -%}
+      {%- if s.heading != blank -%}<h2 class="h1">{{ s.heading }}</h2>{%- endif -%}
+      {%- if s.text != blank -%}<p class="look__text">{{ s.text }}</p>{%- endif -%}
+
+      <ol class="look__list scroller" role="list">
+        {%- for block in section.blocks -%}
+          {%- liquid
+            assign b = block.settings
+            assign p = b.product
+          -%}
+          <li class="look-item{% if forloop.first %} is-active{% endif %}" data-look-item="{{ forloop.index0 }}">
+            <a href="{% if p != blank %}{{ p.url }}{% else %}{{ routes.all_products_collection_url }}{% endif %}" class="look-item__link">
+              <span class="look-item__num">{{ forloop.index }}</span>
+              <span class="look-item__media">
+                {%- if p.featured_media != blank -%}
+                  {{ p.featured_media | image_url: width: 240 | image_tag: loading: 'lazy', widths: '120, 240', sizes: '88px', alt: p.title }}
+                {%- else -%}
+                  {%- capture ph -%}product-{% cycle '1', '2', '3', '4', '5', '6' %}{%- endcapture -%}
+                  {{ ph | placeholder_svg_tag: 'placeholder' }}
+                {%- endif -%}
+              </span>
+              <span class="look-item__info">
+                <span class="look-item__title">{% if p != blank %}{{ p.title | escape }}{% else %}{{ b.title | escape }}{% endif %}</span>
+                {%- if p != blank -%}
+                  {% render 'price', product: p %}
+                {%- endif -%}
+              </span>
+              <span class="look-item__arrow" aria-hidden="true">{% render 'icon', icon: 'arrow-right' %}</span>
+            </a>
+          </li>
+        {%- endfor -%}
+      </ol>
+
+      {%- if s.button_label != blank -%}
+        <a href="{{ s.button_link }}" class="button button--accent look__cta">{{ s.button_label | escape }} {% render 'icon', icon: 'arrow-right' %}</a>
+      {%- endif -%}
+    </div>
+  </look-hotspots>
+</section>
+
+{% schema %}
+{
+  "name": "Shop the look",
+  "class": "section-shop-the-look",
+  "max_blocks": 6,
+  "settings": [
+    { "type": "image_picker", "id": "image", "label": "Image", "info": "1600 x 1200px or taller recommended" },
+    {
+      "type": "select", "id": "image_side", "label": "Image position",
+      "options": [
+        { "value": "left", "label": "Left" },
+        { "value": "right", "label": "Right" }
+      ],
+      "default": "left"
+    },
+    { "type": "text", "id": "eyebrow", "label": "Eyebrow", "default": "Shop the look" },
+    { "type": "inline_richtext", "id": "heading", "label": "Heading", "default": "A smarter corner <em>for every pet</em>" },
+    { "type": "inline_richtext", "id": "text", "label": "Text", "default": "Tap the dots to see what makes this setup tick." },
+    { "type": "text", "id": "button_label", "label": "Button label", "default": "Shop the full setup" },
+    { "type": "url", "id": "button_link", "label": "Button link", "default": "/collections/all" },
+    {
+      "type": "select", "id": "background", "label": "Background",
+      "options": [
+        { "value": "white", "label": "White" },
+        { "value": "surface", "label": "Soft gray" },
+        { "value": "dark", "label": "Black" }
+      ],
+      "default": "dark"
+    },
+    { "type": "range", "id": "padding_top", "label": "Top padding", "min": 0, "max": 120, "step": 4, "unit": "px", "default": 80 },
+    { "type": "range", "id": "padding_bottom", "label": "Bottom padding", "min": 0, "max": 120, "step": 4, "unit": "px", "default": 80 }
+  ],
+  "blocks": [
+    {
+      "type": "hotspot",
+      "name": "Hotspot",
+      "settings": [
+        { "type": "product", "id": "product", "label": "Product" },
+        { "type": "text", "id": "title", "label": "Title", "info": "Shown when no product is selected", "default": "Smart product" },
+        { "type": "range", "id": "x", "label": "Horizontal position", "min": 0, "max": 100, "step": 1, "unit": "%", "default": 50 },
+        { "type": "range", "id": "y", "label": "Vertical position", "min": 0, "max": 100, "step": 1, "unit": "%", "default": 50 }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Shop the look",
+      "blocks": [
+        { "type": "hotspot", "settings": { "title": "Self-cleaning litter box", "x": 68, "y": 62 } },
+        { "type": "hotspot", "settings": { "title": "Smart water fountain", "x": 30, "y": 70 } },
+        { "type": "hotspot", "settings": { "title": "App-controlled feeder", "x": 46, "y": 40 } }
+      ]
+    }
+  ]
+}
+{% endschema %}

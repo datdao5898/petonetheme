@@ -2,7 +2,11 @@ import json, re, os, sys, glob
 root = sys.argv[1]
 errs = []
 def E(*a): errs.append(' '.join(map(str,a)))
-locale = json.load(open(f'{root}/locales/en.default.json'))
+def load_json(path):
+    # Shopify's admin editors prepend a /* auto-generated */ comment to JSON files they touch
+    return json.loads(re.sub(r'^\s*/\*.*?\*/', '', open(path, encoding='utf-8').read(), flags=re.S))
+
+locale = load_json(f'{root}/locales/en.default.json')
 def has_key(k):
     d = locale
     for p in k.split('.'):
@@ -64,7 +68,7 @@ for f in glob.glob(f'{root}/**/*.liquid', recursive=True):
             for sid in set(re.findall(r'\bs\.(\w+)', s)):
                 if sid not in ids: E(rel, 'unknown s. setting', sid)
 # global settings
-gs = json.load(open(f'{root}/config/settings_schema.json'))
+gs = load_json(f'{root}/config/settings_schema.json')
 gids = {x['id'] for g in gs[1:] for x in g['settings'] if 'id' in x}
 def check_settings(where, settings):
     for x in settings:
@@ -98,8 +102,7 @@ for name, sch in schemas.items():
 # templates & groups
 for f in glob.glob(f'{root}/templates/**/*.json', recursive=True) + glob.glob(f'{root}/sections/*.json'):
     rel = os.path.relpath(f, root)
-    # Shopify's theme editor prepends a /* auto-generated */ comment to JSON templates
-    d = json.loads(re.sub(r'^\s*/\*.*?\*/', '', open(f, encoding='utf-8').read(), flags=re.S))
+    d = load_json(f)
     for key, sec in d['sections'].items():
         t = sec['type']
         if t not in schemas: E(rel, 'unknown section', t); continue

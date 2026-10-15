@@ -187,6 +187,74 @@
     }
   }
   if (!customElements.get('hero-slider')) customElements.define('hero-slider', HeroSlider);
+  /* ---------- Spotlight stack ---------- */
+  // Cards are position: sticky; while the next card slides over one, shrink and dim it a little.
+  class StackCards extends HTMLElement {
+    connectedCallback() {
+      this.cards = Array.from(this.querySelectorAll('[data-stack-card]'));
+      if (this.cards.length < 2 || window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+      this.ticking = false;
+      this.onScroll = () => {
+        if (this.ticking) return;
+        this.ticking = true;
+        requestAnimationFrame(() => { this.update(); this.ticking = false; });
+      };
+      window.addEventListener('scroll', this.onScroll, { passive: true });
+      window.addEventListener('resize', this.onScroll);
+      this.update();
+    }
+    disconnectedCallback() {
+      if (!this.onScroll) return;
+      window.removeEventListener('scroll', this.onScroll);
+      window.removeEventListener('resize', this.onScroll);
+    }
+    update() {
+      this.cards.forEach((card, i) => {
+        const next = this.cards[i + 1];
+        if (!next) return;
+        const stickTop = parseFloat(getComputedStyle(card).top) || 0;
+        const h = card.offsetHeight;
+        // 0 when the next card is a full card-height below, 1 when it has fully covered this one
+        const progress = Math.min(Math.max((stickTop + h - next.getBoundingClientRect().top) / h, 0), 1);
+        card.style.setProperty('--stack-scale', (1 - progress * 0.06).toFixed(4));
+        card.style.setProperty('--stack-dim', (progress * 0.45).toFixed(3));
+      });
+    }
+  }
+  if (!customElements.get('stack-cards')) customElements.define('stack-cards', StackCards);
+
+  /* ---------- Shop the look ---------- */
+  class LookHotspots extends HTMLElement {
+    connectedCallback() {
+      this.dots = Array.from(this.querySelectorAll('[data-look-dot]'));
+      this.items = Array.from(this.querySelectorAll('[data-look-item]'));
+      this.list = this.querySelector('.look__list');
+      this.dots.forEach((dot, i) => {
+        dot.addEventListener('click', () => this.select(i, true));
+        dot.addEventListener('mouseenter', () => this.select(i));
+        dot.addEventListener('focus', () => this.select(i));
+      });
+      this.items.forEach((item, i) => {
+        item.addEventListener('mouseenter', () => this.select(i));
+        item.addEventListener('focusin', () => this.select(i));
+      });
+      // Theme editor: selecting a hotspot block highlights it
+      this.addEventListener('shopify:block:select', (e) => {
+        const i = this.dots.indexOf(e.target);
+        if (i > -1) this.select(i, true);
+      });
+    }
+    select(i, reveal) {
+      this.dots.forEach((d, j) => d.classList.toggle('is-active', i === j));
+      this.items.forEach((it, j) => it.classList.toggle('is-active', i === j));
+      // On mobile the list is a horizontal scroller: bring the matching product into view
+      const item = this.items[i];
+      if (reveal && item && this.list && this.list.scrollWidth > this.list.clientWidth) {
+        this.list.scrollTo({ left: item.offsetLeft - this.list.offsetLeft, behavior: 'smooth' });
+      }
+    }
+  }
+  if (!customElements.get('look-hotspots')) customElements.define('look-hotspots', LookHotspots);
 
   /* ---------- Cart helpers ---------- */
   const updateCartCount = (count) => {
@@ -275,7 +343,7 @@
   });
 
   /* ---------- Reveal on scroll ---------- */
-  const revealTargets = '.section-head, .bundle-card, .carousel__slide, .story-panel, .stat, .faq-item, .trust-item, .product-grid > li, .article-card, .collection-tile';
+  const revealTargets = '.section-head, .bundle-card, .carousel__slide, .story-panel, .stat, .faq-item, .trust-item, .product-grid > li, .article-card, .collection-tile, .bento__grid, .look__stage, .look__panel';
   const initReveal = (root) => {
     if (!('IntersectionObserver' in window)) return;
     const els = Array.from((root || document).querySelectorAll(revealTargets)).filter((el) => !el.closest('.header-wrapper'));

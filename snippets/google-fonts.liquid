@@ -1,0 +1,29 @@
+{%- comment -%}
+  Optional Google Fonts override (settings.font_source). Many fonts in Shopify's font library ship
+  Latin-only files, so Vietnamese letters (ơ ư ạ ế ộ…) fall back to a system font. Google Fonts' css2
+  API serves a Vietnamese unicode-range subset automatically. Render after the main :root style block.
+{%- endcomment -%}
+{%- liquid
+  case settings.font_source
+    when 'be_vietnam_pro'
+      assign gf_family = 'Be Vietnam Pro'
+    when 'poppins'
+      assign gf_family = 'Poppins'
+    when 'montserrat'
+      assign gf_family = 'Montserrat'
+    when 'inter'
+      assign gf_family = 'Inter'
+  endcase
+-%}
+{%- if gf_family -%}
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family={{ gf_family | replace: ' ', '+' }}:wght@400;500;600;700;800&display=swap">
+  <style>
+    :root {
+      --font-heading: '{{ gf_family }}', {{ settings.font_heading.fallback_families }};
+      --font-body: '{{ gf_family }}', {{ settings.font_body.fallback_families }};
+      --font-body-weight-bold: 700;
+    }
+  </style>
+{%- endif -%}

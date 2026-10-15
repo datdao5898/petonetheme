@@ -91,6 +91,20 @@
     "name": "Typography",
     "settings": [
       {
+        "type": "select",
+        "id": "font_source",
+        "label": "Font source",
+        "info": "Google fonts include full Vietnamese support (ơ, ư, ạ, ế…). Choose \"Shopify font picker\" to use the two pickers below instead — some of those fonts lack Vietnamese characters.",
+        "options": [
+          { "value": "be_vietnam_pro", "label": "Be Vietnam Pro (Google)" },
+          { "value": "poppins", "label": "Poppins (Google)" },
+          { "value": "montserrat", "label": "Montserrat (Google)" },
+          { "value": "inter", "label": "Inter (Google)" },
+          { "value": "shopify", "label": "Shopify font picker" }
+        ],
+        "default": "be_vietnam_pro"
+      },
+      {
         "type": "font_picker",
         "id": "font_heading",
         "label": "Heading font",

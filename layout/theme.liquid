@@ -35,10 +35,12 @@
     -%}
 
     {% style %}
+      {%- if settings.font_source == 'shopify' -%}
       {{ settings.font_heading | font_face: font_display: 'swap' }}
       {{ settings.font_body | font_face: font_display: 'swap' }}
       {{ body_font_bold | font_face: font_display: 'swap' }}
       {{ body_font_medium | font_face: font_display: 'swap' }}
+      {%- endif -%}
 
       :root {
         --color-dark: {{ settings.color_dark }};
@@ -66,6 +68,7 @@
       }
     {% endstyle %}
 
+    {% render 'google-fonts' %}
     {{ 'base.css' | asset_url | stylesheet_tag }}
     <script src="{{ 'theme.js' | asset_url }}" defer="defer"></script>
     <script>

@@ -1,67 +1,334 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
 {
   "sections": {
     "hero": {
       "type": "hero",
-      "settings": {}
+      "settings": {
+        "image": "shopify://shop_images/jun-ren-fIlSPl7k27s-unsplash.jpg",
+        "height": "large",
+        "content_position": "left",
+        "overlay": 35,
+        "eyebrow": "Smart pet tech for modern homes",
+        "heading": "Smarter care. <em>Happier pets.</em>",
+        "subheading": "Self-cleaning litter boxes, smart fountains and feeders that take care of the daily chores — so you can enjoy more time with your pet.",
+        "button_label": "Shop the sale",
+        "button_link": "shopify://collections/all",
+        "button2_label": "Why Petone",
+        "button2_link": "",
+        "promo_show": true,
+        "promo_label": "Fall Sale",
+        "promo_heading": "Settle into fall. Keep it fresh.",
+        "promo_amount": "Save up to $400",
+        "promo_button_label": "Shop bundles",
+        "promo_button_link": ""
+      }
     },
     "trust": {
       "type": "trust-bar",
       "blocks": {
-        "t1": { "type": "item", "settings": { "icon": "trial", "title": "30-day trial", "text": "Risk-free returns" } },
-        "t2": { "type": "item", "settings": { "icon": "shipping", "title": "Free shipping", "text": "On orders over $49" } },
-        "t3": { "type": "item", "settings": { "icon": "warranty", "title": "Up to 2-year warranty", "text": "Peace of mind included" } },
-        "t4": { "type": "item", "settings": { "icon": "payment", "title": "Pay later", "text": "Flexible installments" } }
+        "t1": {
+          "type": "item",
+          "settings": {
+            "icon": "trial",
+            "title": "30-day trial",
+            "text": "Risk-free returns"
+          }
+        },
+        "t2": {
+          "type": "item",
+          "settings": {
+            "icon": "shipping",
+            "title": "Free shipping",
+            "text": "On orders over $49"
+          }
+        },
+        "t3": {
+          "type": "item",
+          "settings": {
+            "icon": "warranty",
+            "title": "Up to 2-year warranty",
+            "text": "Peace of mind included"
+          }
+        },
+        "t4": {
+          "type": "item",
+          "settings": {
+            "icon": "payment",
+            "title": "Pay later",
+            "text": "Flexible installments"
+          }
+        }
       },
-      "block_order": ["t1", "t2", "t3", "t4"],
-      "settings": { "background": "white" }
+      "block_order": [
+        "t1",
+        "t2",
+        "t3",
+        "t4"
+      ],
+      "settings": {
+        "background": "white",
+        "padding_top": 28,
+        "padding_bottom": 28
+      }
     },
     "bundles": {
       "type": "bundle-grid",
       "blocks": {
-        "b1": { "type": "bundle", "settings": { "label": "Hands-free", "title": "The Complete Hands-Free Home", "includes": "Litter box + Fountain + Feeder", "badge": "Save 39%" } },
-        "b2": { "type": "bundle", "settings": { "label": "Odor control", "title": "Zero Odor Combo", "includes": "Litter box + Air purifier", "badge": "Save 39%" } },
-        "b3": { "type": "bundle", "settings": { "label": "Hydration", "title": "Fresh Water Set", "includes": "Litter box + Fountain", "badge": "Save 34%" } },
-        "b4": { "type": "bundle", "settings": { "label": "Starter", "title": "The Fresh Set", "includes": "Fountain + Filters", "badge": "Save 39%" } }
+        "b1": {
+          "type": "bundle",
+          "settings": {
+            "product": "",
+            "label": "Hands-free",
+            "title": "The Complete Hands-Free Home",
+            "includes": "Litter box + Fountain + Feeder",
+            "badge": "Save 39%"
+          }
+        },
+        "b2": {
+          "type": "bundle",
+          "settings": {
+            "product": "",
+            "label": "Odor control",
+            "title": "Zero Odor Combo",
+            "includes": "Litter box + Air purifier",
+            "badge": "Save 39%"
+          }
+        },
+        "b3": {
+          "type": "bundle",
+          "settings": {
+            "product": "",
+            "label": "Hydration",
+            "title": "Fresh Water Set",
+            "includes": "Litter box + Fountain",
+            "badge": "Save 34%"
+          }
+        },
+        "b4": {
+          "type": "bundle",
+          "settings": {
+            "product": "",
+            "label": "Starter",
+            "title": "The Fresh Set",
+            "includes": "Fountain + Filters",
+            "badge": "Save 39%"
+          }
+        }
       },
-      "block_order": ["b1", "b2", "b3", "b4"],
-      "settings": {}
+      "block_order": [
+        "b1",
+        "b2",
+        "b3",
+        "b4"
+      ],
+      "settings": {
+        "eyebrow": "Bundle & save",
+        "heading": "Choose your pet care bundle",
+        "text": "Hand-picked combos that work better together — and cost less.",
+        "link_label": "View all bundles",
+        "link": "",
+        "columns": 4,
+        "show_price": true,
+        "background": "white",
+        "padding_top": 80,
+        "padding_bottom": 80
+      }
     },
     "collections": {
       "type": "product-tabs",
       "blocks": {
-        "c1": { "type": "tab", "settings": { "label": "Best sellers" } },
-        "c2": { "type": "tab", "settings": { "label": "Litter boxes" } },
-        "c3": { "type": "tab", "settings": { "label": "Fountains" } },
-        "c4": { "type": "tab", "settings": { "label": "Feeders" } }
+        "c1": {
+          "type": "tab",
+          "settings": {
+            "label": "Best sellers",
+            "collection": ""
+          }
+        },
+        "c2": {
+          "type": "tab",
+          "settings": {
+            "label": "Litter boxes",
+            "collection": ""
+          }
+        },
+        "c3": {
+          "type": "tab",
+          "settings": {
+            "label": "Fountains",
+            "collection": ""
+          }
+        },
+        "c4": {
+          "type": "tab",
+          "settings": {
+            "label": "Feeders",
+            "collection": ""
+          }
+        }
       },
-      "block_order": ["c1", "c2", "c3", "c4"],
-      "settings": {}
+      "block_order": [
+        "c1",
+        "c2",
+        "c3",
+        "c4"
+      ],
+      "settings": {
+        "eyebrow": "Collections",
+        "heading": "Smart care for every routine",
+        "limit": 10,
+        "show_price": true,
+        "show_view_all": false,
+        "background": "surface",
+        "padding_top": 80,
+        "padding_bottom": 80
+      }
     },
     "story": {
       "type": "brand-story",
       "blocks": {
-        "s1": { "type": "stat", "settings": { "value": "50,000+", "label": "Happy pets" } },
-        "s2": { "type": "stat", "settings": { "value": "4.8★", "label": "Average rating" } },
-        "s3": { "type": "stat", "settings": { "value": "2-year", "label": "Warranty" } },
-        "s4": { "type": "stat", "settings": { "value": "24/7", "label": "Pet parent support" } },
-        "p1": { "type": "panel", "settings": {} },
-        "p2": { "type": "panel", "settings": { "eyebrow": "Partner with us", "title": "Creators & media", "text": "<p>Love pets and tech? Join the Petone partner program and grow with us.</p>", "button_label": "Partner with us" } }
+        "s1": {
+          "type": "stat",
+          "settings": {
+            "value": "50,000+",
+            "label": "Happy pets"
+          }
+        },
+        "s2": {
+          "type": "stat",
+          "settings": {
+            "value": "4.8★",
+            "label": "Average rating"
+          }
+        },
+        "s3": {
+          "type": "stat",
+          "settings": {
+            "value": "2-year",
+            "label": "Warranty"
+          }
+        },
+        "s4": {
+          "type": "stat",
+          "settings": {
+            "value": "24/7",
+            "label": "Pet parent support"
+          }
+        },
+        "p1": {
+          "type": "panel",
+          "settings": {
+            "video_url": "",
+            "eyebrow": "Our story",
+            "title": "Built for pets. Trusted by families.",
+            "text": "<p>From smart litter boxes to filtered fountains, every Petone product is tested for safety, quietness and durability.</p>",
+            "button_label": "Learn more",
+            "button_link": ""
+          }
+        },
+        "p2": {
+          "type": "panel",
+          "settings": {
+            "video_url": "",
+            "eyebrow": "Partner with us",
+            "title": "Creators & media",
+            "text": "<p>Love pets and tech? Join the Petone partner program and grow with us.</p>",
+            "button_label": "Partner with us",
+            "button_link": ""
+          }
+        }
       },
-      "block_order": ["s1", "s2", "s3", "s4", "p1", "p2"],
-      "settings": {}
+      "block_order": [
+        "s1",
+        "s2",
+        "s3",
+        "s4",
+        "p1",
+        "p2"
+      ],
+      "settings": {
+        "eyebrow": "Why Petone",
+        "heading": "Smart pet tech, made with love",
+        "text": "Designed by pet parents and engineers to make everyday care effortless, hygienic and safe.",
+        "layout": "wide-left",
+        "background": "dark",
+        "padding_top": 88,
+        "padding_bottom": 88
+      }
     },
     "faq": {
       "type": "faq",
       "blocks": {
-        "q1": { "type": "question", "settings": { "question": "What is Petone?", "answer": "<p>Petone is a smart pet care brand creating connected products — self-cleaning litter boxes, water fountains, feeders and grooming tools — that make daily pet care easier and more hygienic.</p>" } },
-        "q2": { "type": "question", "settings": { "question": "Which pets are Petone products designed for?", "answer": "<p>Most of our products are designed for cats and small to medium dogs. Each product page lists the recommended pet size and weight.</p>" } },
-        "q3": { "type": "question", "settings": { "question": "How long does shipping take?", "answer": "<p>Orders are usually processed within 1–2 business days. Delivery times depend on your location and are shown at checkout.</p>" } },
-        "q4": { "type": "question", "settings": { "question": "What warranty do you offer?", "answer": "<p>All Petone devices include a manufacturer warranty. Bundles and selected products include an extended warranty.</p>" } },
-        "q5": { "type": "question", "settings": { "question": "Can I return a product?", "answer": "<p>Yes. You can try Petone risk-free for 30 days. If you're not happy, contact us to start a return.</p>" } }
+        "q1": {
+          "type": "question",
+          "settings": {
+            "question": "What is Petone?",
+            "answer": "<p>Petone is a smart pet care brand creating connected products — self-cleaning litter boxes, water fountains, feeders and grooming tools — that make daily pet care easier and more hygienic.</p>"
+          }
+        },
+        "q2": {
+          "type": "question",
+          "settings": {
+            "question": "Which pets are Petone products designed for?",
+            "answer": "<p>Most of our products are designed for cats and small to medium dogs. Each product page lists the recommended pet size and weight.</p>"
+          }
+        },
+        "q3": {
+          "type": "question",
+          "settings": {
+            "question": "How long does shipping take?",
+            "answer": "<p>Orders are usually processed within 1–2 business days. Delivery times depend on your location and are shown at checkout.</p>"
+          }
+        },
+        "q4": {
+          "type": "question",
+          "settings": {
+            "question": "What warranty do you offer?",
+            "answer": "<p>All Petone devices include a manufacturer warranty. Bundles and selected products include an extended warranty.</p>"
+          }
+        },
+        "q5": {
+          "type": "question",
+          "settings": {
+            "question": "Can I return a product?",
+            "answer": "<p>Yes. You can try Petone risk-free for 30 days. If you're not happy, contact us to start a return.</p>"
+          }
+        }
       },
-      "block_order": ["q1", "q2", "q3", "q4", "q5"],
-      "settings": {}
+      "block_order": [
+        "q1",
+        "q2",
+        "q3",
+        "q4",
+        "q5"
+      ],
+      "settings": {
+        "eyebrow": "FAQ",
+        "heading": "Everything about Petone",
+        "text": "<p>Can't find what you're looking for? Our pet parent support team is happy to help.</p>",
+        "button_label": "Contact us",
+        "button_link": "",
+        "open_first": true,
+        "schema_markup": true,
+        "background": "white",
+        "padding_top": 88,
+        "padding_bottom": 88
+      }
     }
   },
-  "order": ["hero", "trust", "bundles", "collections", "story", "faq"]
+  "order": [
+    "hero",
+    "trust",
+    "bundles",
+    "collections",
+    "story",
+    "faq"
+  ]
 }

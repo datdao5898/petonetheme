@@ -248,6 +248,175 @@
         "padding_bottom": 80
       }
     },
+    "spotlight": {
+      "type": "spotlight-stack",
+      "blocks": {
+        "spot_1": {
+          "type": "spotlight",
+          "settings": {
+            "image": "shopify://shop_images/kyle-hinkson-y0iwC01URw4-unsplash.jpg",
+            "scheme": "dark",
+            "text_side": "left",
+            "badge": "Just launched",
+            "kicker": "Petone Smart Series",
+            "heading": "Self-cleaning <em>litter box</em>",
+            "offer": "Save $120 · Limited-time deal",
+            "button_label": "Shop now",
+            "button_link": "shopify://collections/all",
+            "button2_label": "Watch demo",
+            "button2_link": "",
+            "button2_new_tab": true
+          }
+        },
+        "spot_2": {
+          "type": "spotlight",
+          "settings": {
+            "image": "shopify://shop_images/vinicius-amnx-amano-tdQQMvwmSN8-unsplash.jpg",
+            "scheme": "light",
+            "text_side": "right",
+            "badge": "New",
+            "kicker": "Petone Hydra",
+            "heading": "Smart <em>water fountain</em>",
+            "offer": "Up to $40 off · Exclusive savings",
+            "button_label": "Shop now",
+            "button_link": "shopify://collections/all",
+            "button2_label": "Watch demo",
+            "button2_link": "",
+            "button2_new_tab": true
+          }
+        },
+        "spot_3": {
+          "type": "spotlight",
+          "settings": {
+            "image": "shopify://shop_images/konrad-dobosz-UJh-88QQIWw-unsplash.jpg",
+            "scheme": "accent",
+            "text_side": "left",
+            "badge": "Best seller",
+            "kicker": "Petone Feast",
+            "heading": "App-controlled <em>feeder</em>",
+            "offer": "Save $60 · This week only",
+            "button_label": "Shop now",
+            "button_link": "shopify://collections/all",
+            "button2_label": "",
+            "button2_link": "",
+            "button2_new_tab": true
+          }
+        }
+      },
+      "block_order": [
+        "spot_1",
+        "spot_2",
+        "spot_3"
+      ],
+      "settings": {
+        "eyebrow": "In the spotlight",
+        "heading": "New tech for <em>happier homes</em>",
+        "background": "surface",
+        "padding_top": 80,
+        "padding_bottom": 80
+      }
+    },
+    "bento": {
+      "type": "bento-gallery",
+      "blocks": {
+        "tile_1": {
+          "type": "tile",
+          "settings": {
+            "size": "large",
+            "style": "image",
+            "image": "shopify://shop_images/jun-ren-fIlSPl7k27s-unsplash.jpg",
+            "label": "Litter care",
+            "big_text": "",
+            "heading": "Scoop-free <em>mornings</em>",
+            "text": "",
+            "link": "shopify://collections/all"
+          }
+        },
+        "tile_2": {
+          "type": "tile",
+          "settings": {
+            "size": "small",
+            "style": "accent",
+            "image": "shopify://shop_images/dex-ezekiel--nOCYgeOtX8-unsplash.jpg",
+            "label": "Odor control",
+            "big_text": "99%",
+            "heading": "fewer odors at home",
+            "text": "",
+            "link": ""
+          }
+        },
+        "tile_3": {
+          "type": "tile",
+          "settings": {
+            "size": "tall",
+            "style": "image",
+            "image": "shopify://shop_images/jun-ren-us-ds1HIjgQ-unsplash.jpg",
+            "label": "Hydration",
+            "big_text": "",
+            "heading": "Fresh water, all day",
+            "text": "",
+            "link": "shopify://collections/all"
+          }
+        },
+        "tile_4": {
+          "type": "tile",
+          "settings": {
+            "size": "small",
+            "style": "dark",
+            "image": "shopify://shop_images/d-ng-ph-c-h-i-tri-u-OtDLRtPzGxQ-unsplash.jpg",
+            "label": "Peace of mind",
+            "big_text": "24/7",
+            "heading": "App alerts anywhere",
+            "text": "",
+            "link": ""
+          }
+        },
+        "tile_5": {
+          "type": "tile",
+          "settings": {
+            "size": "wide",
+            "style": "image",
+            "image": "shopify://shop_images/jun-ren-us-ds1HIjgQ-unsplash.jpg",
+            "label": "Feeding",
+            "big_text": "",
+            "heading": "Meals right on schedule",
+            "text": "",
+            "link": "shopify://collections/all"
+          }
+        },
+        "tile_6": {
+          "type": "tile",
+          "settings": {
+            "size": "wide",
+            "style": "image",
+            "image": "shopify://shop_images/jun-ren-fIlSPl7k27s-unsplash.jpg",
+            "label": "Grooming",
+            "big_text": "",
+            "heading": "Less fur, <em>more cuddles</em>",
+            "text": "",
+            "link": "shopify://collections/all"
+          }
+        }
+      },
+      "block_order": [
+        "tile_1",
+        "tile_2",
+        "tile_3",
+        "tile_4",
+        "tile_5",
+        "tile_6"
+      ],
+      "settings": {
+        "eyebrow": "Life with Petone",
+        "heading": "Made for the way <em>pets live</em>",
+        "text": "",
+        "link_label": "Explore all",
+        "link": "shopify://collections/all",
+        "background": "white",
+        "padding_top": 80,
+        "padding_bottom": 80
+      }
+    },
     "story": {
       "type": "brand-story",
       "blocks": {
@@ -322,6 +491,55 @@
         "padding_bottom": 88
       }
     },
+    "look": {
+      "type": "shop-the-look",
+      "blocks": {
+        "spot_1": {
+          "type": "hotspot",
+          "settings": {
+            "product": "",
+            "title": "Self-cleaning litter box",
+            "x": 68,
+            "y": 62
+          }
+        },
+        "spot_2": {
+          "type": "hotspot",
+          "settings": {
+            "product": "",
+            "title": "Smart water fountain",
+            "x": 30,
+            "y": 70
+          }
+        },
+        "spot_3": {
+          "type": "hotspot",
+          "settings": {
+            "product": "",
+            "title": "App-controlled feeder",
+            "x": 46,
+            "y": 40
+          }
+        }
+      },
+      "block_order": [
+        "spot_1",
+        "spot_2",
+        "spot_3"
+      ],
+      "settings": {
+        "image": "shopify://shop_images/jun-ren-fIlSPl7k27s-unsplash.jpg",
+        "image_side": "left",
+        "eyebrow": "Shop the look",
+        "heading": "A smarter corner <em>for every pet</em>",
+        "text": "Tap the dots to see what makes this setup tick.",
+        "button_label": "Shop the full setup",
+        "button_link": "shopify://collections/all",
+        "background": "dark",
+        "padding_top": 80,
+        "padding_bottom": 80
+      }
+    },
     "faq": {
       "type": "faq",
       "blocks": {
@@ -379,207 +597,6 @@
         "background": "white",
         "padding_top": 88,
         "padding_bottom": 88
-      }
-    },
-    "spotlight": {
-      "type": "spotlight-stack",
-      "blocks": {
-        "spot_1": {
-          "type": "spotlight",
-          "settings": {
-            "image": "shopify://shop_images/jun-ren-us-ds1HIjgQ-unsplash.jpg",
-            "scheme": "dark",
-            "text_side": "left",
-            "badge": "Just launched",
-            "kicker": "Petone Smart Series",
-            "heading": "Self-cleaning <em>litter box</em>",
-            "offer": "Save $120 · Limited-time deal",
-            "button_label": "Shop now",
-            "button_link": "shopify://collections/all",
-            "button2_label": "Watch demo",
-            "button2_link": "",
-            "button2_new_tab": true
-          }
-        },
-        "spot_2": {
-          "type": "spotlight",
-          "settings": {
-            "image": "shopify://shop_images/jun-ren-fIlSPl7k27s-unsplash.jpg",
-            "scheme": "light",
-            "text_side": "right",
-            "badge": "New",
-            "kicker": "Petone Hydra",
-            "heading": "Smart <em>water fountain</em>",
-            "offer": "Up to $40 off · Exclusive savings",
-            "button_label": "Shop now",
-            "button_link": "shopify://collections/all",
-            "button2_label": "Watch demo",
-            "button2_link": "",
-            "button2_new_tab": true
-          }
-        },
-        "spot_3": {
-          "type": "spotlight",
-          "settings": {
-            "image": "shopify://shop_images/jun-ren-us-ds1HIjgQ-unsplash.jpg",
-            "scheme": "accent",
-            "text_side": "left",
-            "badge": "Best seller",
-            "kicker": "Petone Feast",
-            "heading": "App-controlled <em>feeder</em>",
-            "offer": "Save $60 · This week only",
-            "button_label": "Shop now",
-            "button_link": "shopify://collections/all",
-            "button2_label": "",
-            "button2_link": "",
-            "button2_new_tab": true
-          }
-        }
-      },
-      "block_order": [
-        "spot_1",
-        "spot_2",
-        "spot_3"
-      ],
-      "settings": {
-        "eyebrow": "In the spotlight",
-        "heading": "New tech for <em>happier homes</em>",
-        "background": "surface",
-        "padding_top": 80,
-        "padding_bottom": 80
-      }
-    },
-    "bento": {
-      "type": "bento-gallery",
-      "blocks": {
-        "tile_1": {
-          "type": "tile",
-          "settings": {
-            "size": "large",
-            "style": "image",
-            "image": "shopify://shop_images/jun-ren-fIlSPl7k27s-unsplash.jpg",
-            "label": "Litter care",
-            "heading": "Scoop-free <em>mornings</em>",
-            "link": "shopify://collections/all"
-          }
-        },
-        "tile_2": {
-          "type": "tile",
-          "settings": {
-            "size": "small",
-            "style": "accent",
-            "label": "Odor control",
-            "big_text": "99%",
-            "heading": "fewer odors at home"
-          }
-        },
-        "tile_3": {
-          "type": "tile",
-          "settings": {
-            "size": "tall",
-            "style": "image",
-            "image": "shopify://shop_images/jun-ren-us-ds1HIjgQ-unsplash.jpg",
-            "label": "Hydration",
-            "heading": "Fresh water, all day",
-            "link": "shopify://collections/all"
-          }
-        },
-        "tile_4": {
-          "type": "tile",
-          "settings": {
-            "size": "small",
-            "style": "dark",
-            "label": "Peace of mind",
-            "big_text": "24/7",
-            "heading": "App alerts anywhere"
-          }
-        },
-        "tile_5": {
-          "type": "tile",
-          "settings": {
-            "size": "wide",
-            "style": "image",
-            "image": "shopify://shop_images/jun-ren-us-ds1HIjgQ-unsplash.jpg",
-            "label": "Feeding",
-            "heading": "Meals right on schedule",
-            "link": "shopify://collections/all"
-          }
-        },
-        "tile_6": {
-          "type": "tile",
-          "settings": {
-            "size": "wide",
-            "style": "image",
-            "image": "shopify://shop_images/jun-ren-fIlSPl7k27s-unsplash.jpg",
-            "label": "Grooming",
-            "heading": "Less fur, <em>more cuddles</em>",
-            "link": "shopify://collections/all"
-          }
-        }
-      },
-      "block_order": [
-        "tile_1",
-        "tile_2",
-        "tile_3",
-        "tile_4",
-        "tile_5",
-        "tile_6"
-      ],
-      "settings": {
-        "eyebrow": "Life with Petone",
-        "heading": "Made for the way <em>pets live</em>",
-        "text": "",
-        "link_label": "Explore all",
-        "link": "shopify://collections/all",
-        "background": "white",
-        "padding_top": 80,
-        "padding_bottom": 80
-      }
-    },
-    "look": {
-      "type": "shop-the-look",
-      "blocks": {
-        "spot_1": {
-          "type": "hotspot",
-          "settings": {
-            "title": "Self-cleaning litter box",
-            "x": 68,
-            "y": 62
-          }
-        },
-        "spot_2": {
-          "type": "hotspot",
-          "settings": {
-            "title": "Smart water fountain",
-            "x": 30,
-            "y": 70
-          }
-        },
-        "spot_3": {
-          "type": "hotspot",
-          "settings": {
-            "title": "App-controlled feeder",
-            "x": 46,
-            "y": 40
-          }
-        }
-      },
-      "block_order": [
-        "spot_1",
-        "spot_2",
-        "spot_3"
-      ],
-      "settings": {
-        "image": "shopify://shop_images/jun-ren-fIlSPl7k27s-unsplash.jpg",
-        "image_side": "left",
-        "eyebrow": "Shop the look",
-        "heading": "A smarter corner <em>for every pet</em>",
-        "text": "Tap the dots to see what makes this setup tick.",
-        "button_label": "Shop the full setup",
-        "button_link": "shopify://collections/all",
-        "background": "dark",
-        "padding_top": 80,
-        "padding_bottom": 80
       }
     }
   },

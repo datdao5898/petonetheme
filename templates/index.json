@@ -15,7 +15,7 @@
         "slide_1": {
           "type": "slide",
           "settings": {
-            "image": "shopify://shop_images/jun-ren-us-ds1HIjgQ-unsplash.jpg",
+            "image": "shopify://shop_images/mikhail-vasilyev-IFxjDdqK_0U-unsplash.jpg",
             "content_position": "left",
             "eyebrow": "Smart pet tech for modern homes",
             "heading": "Smarter care. <em>Happier pets.</em>",
@@ -29,7 +29,6 @@
         "slide_mgqrVG": {
           "type": "slide",
           "settings": {
-            "image": "shopify://shop_images/marcin-szmigiel-FSeYXEG7FZI-unsplash.jpg",
             "content_position": "left",
             "eyebrow": "Smart pet tech for modern homes",
             "heading": "Smarter care. <em>Happier pets.</em>",
@@ -43,7 +42,6 @@
         "slide_2": {
           "type": "slide",
           "settings": {
-            "image": "shopify://shop_images/jun-ren-fIlSPl7k27s-unsplash.jpg",
             "content_position": "left",
             "eyebrow": "Self-cleaning litter box",
             "heading": "Scoop-free. <em>Odor-free.</em>",
@@ -57,7 +55,6 @@
         "slide_WmqaNc": {
           "type": "slide",
           "settings": {
-            "image": "shopify://shop_images/dex-ezekiel--nOCYgeOtX8-unsplash.jpg",
             "content_position": "left",
             "eyebrow": "Smart pet tech for modern homes",
             "heading": "Smarter care. <em>Happier pets.</em>",
@@ -206,28 +203,28 @@
           "type": "tab",
           "settings": {
             "label": "Best sellers",
-            "collection": "automatic-pet-feeder"
+            "collection": "cat-dryers"
           }
         },
         "c2": {
           "type": "tab",
           "settings": {
             "label": "Litter boxes",
-            "collection": "automatic-pet-feeder"
+            "collection": "water-fountains"
           }
         },
         "c3": {
           "type": "tab",
           "settings": {
             "label": "Fountains",
-            "collection": "automatic-pet-feeder"
+            "collection": "feeders"
           }
         },
         "c4": {
           "type": "tab",
           "settings": {
             "label": "Feeders",
-            "collection": "automatic-pet-feeder"
+            "collection": "enabot"
           }
         }
       },
@@ -254,7 +251,7 @@
         "spot_1": {
           "type": "spotlight",
           "settings": {
-            "image": "shopify://shop_images/kyle-hinkson-y0iwC01URw4-unsplash.jpg",
+            "image": "shopify://shop_images/167.png",
             "scheme": "dark",
             "text_side": "left",
             "badge": "Just launched",
@@ -271,7 +268,7 @@
         "spot_2": {
           "type": "spotlight",
           "settings": {
-            "image": "shopify://shop_images/vinicius-amnx-amano-tdQQMvwmSN8-unsplash.jpg",
+            "image": "shopify://shop_images/petoneer-pf009-khay-400ml_5.webp",
             "scheme": "light",
             "text_side": "right",
             "badge": "New",
@@ -288,7 +285,7 @@
         "spot_3": {
           "type": "spotlight",
           "settings": {
-            "image": "shopify://shop_images/konrad-dobosz-UJh-88QQIWw-unsplash.jpg",
+            "image": "shopify://shop_images/petoneer-pf009-khay-400ml_4.webp",
             "scheme": "accent",
             "text_side": "left",
             "badge": "Best seller",
@@ -324,7 +321,7 @@
           "settings": {
             "size": "large",
             "style": "image",
-            "image": "shopify://shop_images/jun-ren-fIlSPl7k27s-unsplash.jpg",
+            "image": "shopify://shop_images/rfid-tag-pa001-de-gan-vong-co.webp",
             "label": "Litter care",
             "big_text": "",
             "heading": "Scoop-free <em>mornings</em>",
@@ -337,7 +334,7 @@
           "settings": {
             "size": "small",
             "style": "accent",
-            "image": "shopify://shop_images/dex-ezekiel--nOCYgeOtX8-unsplash.jpg",
+            "image": "shopify://shop_images/170.png",
             "label": "Odor control",
             "big_text": "99%",
             "heading": "fewer odors at home",
@@ -350,7 +347,7 @@
           "settings": {
             "size": "tall",
             "style": "image",
-            "image": "shopify://shop_images/jun-ren-us-ds1HIjgQ-unsplash.jpg",
+            "image": "shopify://shop_images/171.png",
             "label": "Hydration",
             "big_text": "",
             "heading": "Fresh water, all day",
@@ -363,7 +360,7 @@
           "settings": {
             "size": "small",
             "style": "dark",
-            "image": "shopify://shop_images/d-ng-ph-c-h-i-tri-u-OtDLRtPzGxQ-unsplash.jpg",
+            "image": "shopify://shop_images/homerunpet-pd10-bo-loc-truoc-sau.webp",
             "label": "Peace of mind",
             "big_text": "24/7",
             "heading": "App alerts anywhere",
@@ -376,7 +373,7 @@
           "settings": {
             "size": "wide",
             "style": "image",
-            "image": "shopify://shop_images/jun-ren-us-ds1HIjgQ-unsplash.jpg",
+            "image": "shopify://shop_images/petoneer-pf009-khay-400ml_3.webp",
             "label": "Feeding",
             "big_text": "",
             "heading": "Meals right on schedule",
@@ -389,7 +386,7 @@
           "settings": {
             "size": "wide",
             "style": "image",
-            "image": "shopify://shop_images/jun-ren-fIlSPl7k27s-unsplash.jpg",
+            "image": "shopify://shop_images/rfid-tag-pa001-nha-nhieu-thu-cung_8cdf9914-81f6-41bd-b65e-dbd8973b68dc.jpg",
             "label": "Grooming",
             "big_text": "",
             "heading": "Less fur, <em>more cuddles</em>",
@@ -451,7 +448,7 @@
         "p1": {
           "type": "panel",
           "settings": {
-            "image": "shopify://shop_images/sandra-beatrice-molnar-19AcrxQ7blg-unsplash.jpg",
+            "image": "shopify://shop_images/tui-rac-els-pet-els-1001-02_tuong_thich_orbitie.webp",
             "video_url": "",
             "eyebrow": "Our story",
             "title": "Built for pets. Trusted by families.",
@@ -463,7 +460,7 @@
         "p2": {
           "type": "panel",
           "settings": {
-            "image": "shopify://shop_images/d-ng-ph-c-h-i-tri-u-4K4LuGXZnMs-unsplash.jpg",
+            "image": "shopify://shop_images/pawgether-gravity-feeder-3-5l-chong-truot_1.webp",
             "video_url": "",
             "eyebrow": "Partner with us",
             "title": "Creators & media",
@@ -528,7 +525,7 @@
         "spot_3"
       ],
       "settings": {
-        "image": "shopify://shop_images/jun-ren-fIlSPl7k27s-unsplash.jpg",
+        "image": "shopify://shop_images/jun-ren-us-ds1HIjgQ-unsplash.jpg",
         "image_side": "left",
         "eyebrow": "Shop the look",
         "heading": "A smarter corner <em>for every pet</em>",

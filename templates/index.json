@@ -12,7 +12,7 @@
     "hero": {
       "type": "hero",
       "settings": {
-        "image": "shopify://shop_images/jun-ren-fIlSPl7k27s-unsplash.jpg",
+        "image": "shopify://shop_images/Blog_2.webp",
         "height": "large",
         "content_position": "left",
         "overlay": 35,
@@ -85,7 +85,7 @@
         "b1": {
           "type": "bundle",
           "settings": {
-            "product": "",
+            "product": "be-buoc-nha-ve-sinh-meo-els-pet-els-4391",
             "label": "Hands-free",
             "title": "The Complete Hands-Free Home",
             "includes": "Litter box + Fountain + Feeder",
@@ -95,7 +95,7 @@
         "b2": {
           "type": "bundle",
           "settings": {
-            "product": "",
+            "product": "binh-nuoc-du-lich-cho-meo-pawgether-pg1",
             "label": "Odor control",
             "title": "Zero Odor Combo",
             "includes": "Litter box + Air purifier",
@@ -105,7 +105,7 @@
         "b3": {
           "type": "bundle",
           "settings": {
-            "product": "",
+            "product": "loi-loc-pawgether-fte-p34-p3-p4",
             "label": "Hydration",
             "title": "Fresh Water Set",
             "includes": "Litter box + Fountain",
@@ -115,7 +115,7 @@
         "b4": {
           "type": "bundle",
           "settings": {
-            "product": "",
+            "product": "hop-hut-chan-khong-petaboo-criseal-200-mf",
             "label": "Starter",
             "title": "The Fresh Set",
             "includes": "Fountain + Filters",
@@ -149,28 +149,28 @@
           "type": "tab",
           "settings": {
             "label": "Best sellers",
-            "collection": ""
+            "collection": "cat-dryers"
           }
         },
         "c2": {
           "type": "tab",
           "settings": {
             "label": "Litter boxes",
-            "collection": ""
+            "collection": "enabot"
           }
         },
         "c3": {
           "type": "tab",
           "settings": {
             "label": "Fountains",
-            "collection": ""
+            "collection": "grooming"
           }
         },
         "c4": {
           "type": "tab",
           "settings": {
             "label": "Feeders",
-            "collection": ""
+            "collection": "water-fountains"
           }
         }
       },
@@ -225,6 +225,7 @@
         "p1": {
           "type": "panel",
           "settings": {
+            "image": "shopify://shop_images/homerunpet-pd10-luong-gio-120ms_f59967be-c59e-4ad0-9fea-957419d92e63.webp",
             "video_url": "",
             "eyebrow": "Our story",
             "title": "Built for pets. Trusted by families.",
@@ -236,6 +237,7 @@
         "p2": {
           "type": "panel",
           "settings": {
+            "image": "shopify://shop_images/petoneer-pf009-khay-400ml_5.webp",
             "video_url": "",
             "eyebrow": "Partner with us",
             "title": "Creators & media",

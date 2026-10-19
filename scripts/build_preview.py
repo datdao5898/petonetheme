@@ -49,10 +49,10 @@ bundles = [('Hands-free','The Complete Hands-Free Home','Litter box + Fountain +
 bhtml = ''
 for lab,t,inc,badge,k,p,c in bundles:
     bhtml += f'''<article class="bundle-card"><div class="bundle-card__top"><span class="bundle-card__label">{lab}</span><span class="badge badge--sale">{badge}</span></div>
-<a class="bundle-card__media" href="#">{bundle_img(k,'#eef3f0')}</a>
+<a class="bundle-card__media" href="#">{bundle_img(k,'#ffffff')}</a>
 <div class="bundle-card__body"><h3 class="bundle-card__title">{t}</h3><p class="bundle-card__includes">{inc}</p>
-<div class="price price--on-sale"><span class="price__current">{p}</span><s class="price__compare">{c}</s></div>
-<div class="bundle-card__actions"><a href="#" class="link-underline">See details</a><form class="js-add-form"><button type="button" class="button button--small">Add to cart</button></form></div></div></article>'''
+<div class="bundle-card__footer"><div class="price price--on-sale"><span class="price__current">{p}</span><s class="price__compare">{c}</s></div>
+<div class="bundle-card__actions"><form class="js-add-form bundle-card__form"><button type="button" class="button button--small button--dark bundle-card__add">{icon("cart")} Add to cart</button></form><a href="#" class="bundle-card__details" aria-label="See details">{icon("arrow-right")}</a></div></div></div></article>'''
 prods = [('litter','SNOW+ Self-Cleaning Litter Box','Top 1','Save $170','-22%','$599','$769'),
          ('fountain','OilClear A.I Smart Fountain','New','Up to $50 off','-30%','$119','$169'),
          ('purifier','Pet Air Purifier Pro','Just Launched','Save $70','-25%','$209','$279'),

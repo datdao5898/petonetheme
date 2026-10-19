@@ -45,23 +45,26 @@
           <div class="bundle-card__body">
             <h3 class="bundle-card__title">{{ title | escape }}</h3>
             {%- if block.settings.includes != blank -%}<p class="bundle-card__includes">{{ block.settings.includes }}</p>{%- endif -%}
-            {%- if p != blank and section.settings.show_price -%}
-              {%- render 'price', product: p, use_variant: false -%}
-            {%- endif -%}
-            <div class="bundle-card__actions">
-              {%- if p != blank -%}
-                <a href="{{ p.url }}" class="link-underline">{{ 'general.see_details' | t }}</a>
-                {%- assign v = p.selected_or_first_available_variant -%}
-                {%- form 'product', p, class: 'js-add-form' -%}
-                  <input type="hidden" name="id" value="{{ v.id }}">
-                  <button type="submit" name="add" class="button button--small"{% unless v.available %} disabled{% endunless %}>
-                    {%- if v.available -%}{{ 'general.add_to_cart' | t }}{%- else -%}{{ 'general.sold_out' | t }}{%- endif -%}
-                  </button>
-                {%- endform -%}
-              {%- else -%}
-                <span class="link-underline">{{ 'general.see_details' | t }}</span>
-                <span class="button button--small">{{ 'general.add_to_cart' | t }}</span>
+            <div class="bundle-card__footer">
+              {%- comment -%} A 0-priced product is usually not priced yet — don't advertise "0" {%- endcomment -%}
+              {%- if p != blank and section.settings.show_price and p.price > 0 -%}
+                {%- render 'price', product: p, use_variant: false -%}
               {%- endif -%}
+              <div class="bundle-card__actions">
+                {%- if p != blank -%}
+                  {%- assign v = p.selected_or_first_available_variant -%}
+                  {%- form 'product', p, class: 'js-add-form bundle-card__form' -%}
+                    <input type="hidden" name="id" value="{{ v.id }}">
+                    <button type="submit" name="add" class="button button--small button--dark bundle-card__add"{% unless v.available %} disabled{% endunless %}>
+                      {%- if v.available -%}{% render 'icon', icon: 'cart' %} {{ 'general.add_to_cart' | t }}{%- else -%}{{ 'general.sold_out' | t }}{%- endif -%}
+                    </button>
+                  {%- endform -%}
+                  <a href="{{ p.url }}" class="bundle-card__details" aria-label="{{ 'general.see_details' | t }}: {{ title | escape }}">{% render 'icon', icon: 'arrow-right' %}</a>
+                {%- else -%}
+                  <span class="button button--small button--dark bundle-card__add">{% render 'icon', icon: 'cart' %} {{ 'general.add_to_cart' | t }}</span>
+                  <span class="bundle-card__details" aria-hidden="true">{% render 'icon', icon: 'arrow-right' %}</span>
+                {%- endif -%}
+              </div>
             </div>
           </div>
         </article>

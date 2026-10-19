@@ -29,6 +29,7 @@
         "slide_mgqrVG": {
           "type": "slide",
           "settings": {
+            "image": "shopify://shop_images/mikhail-vasilyev-IFxjDdqK_0U-unsplash.jpg",
             "content_position": "left",
             "eyebrow": "Smart pet tech for modern homes",
             "heading": "Smarter care. <em>Happier pets.</em>",
@@ -42,6 +43,7 @@
         "slide_2": {
           "type": "slide",
           "settings": {
+            "image": "shopify://shop_images/mikhail-vasilyev-IFxjDdqK_0U-unsplash.jpg",
             "content_position": "left",
             "eyebrow": "Self-cleaning litter box",
             "heading": "Scoop-free. <em>Odor-free.</em>",
@@ -55,6 +57,7 @@
         "slide_WmqaNc": {
           "type": "slide",
           "settings": {
+            "image": "shopify://shop_images/mikhail-vasilyev-IFxjDdqK_0U-unsplash.jpg",
             "content_position": "left",
             "eyebrow": "Smart pet tech for modern homes",
             "heading": "Smarter care. <em>Happier pets.</em>",
@@ -251,7 +254,7 @@
         "spot_1": {
           "type": "spotlight",
           "settings": {
-            "image": "shopify://shop_images/167.png",
+            "image": "shopify://shop_images/laura-chouette-g6Ny4dvHlE0-unsplash.jpg",
             "scheme": "dark",
             "text_side": "left",
             "badge": "Just launched",
@@ -268,7 +271,7 @@
         "spot_2": {
           "type": "spotlight",
           "settings": {
-            "image": "shopify://shop_images/petoneer-pf009-khay-400ml_5.webp",
+            "image": "shopify://shop_images/yoo-hoo-JBBmHr1VFIM-unsplash.jpg",
             "scheme": "light",
             "text_side": "right",
             "badge": "New",
@@ -285,7 +288,7 @@
         "spot_3": {
           "type": "spotlight",
           "settings": {
-            "image": "shopify://shop_images/petoneer-pf009-khay-400ml_4.webp",
+            "image": "shopify://shop_images/tran-mau-tri-tam--81lVsfM4gQ-unsplash.jpg",
             "scheme": "accent",
             "text_side": "left",
             "badge": "Best seller",
@@ -321,7 +324,7 @@
           "settings": {
             "size": "large",
             "style": "image",
-            "image": "shopify://shop_images/rfid-tag-pa001-de-gan-vong-co.webp",
+            "image": "shopify://shop_images/yoo-hoo-JBBmHr1VFIM-unsplash.jpg",
             "label": "Litter care",
             "big_text": "",
             "heading": "Scoop-free <em>mornings</em>",
@@ -373,7 +376,7 @@
           "settings": {
             "size": "wide",
             "style": "image",
-            "image": "shopify://shop_images/petoneer-pf009-khay-400ml_3.webp",
+            "image": "shopify://shop_images/tran-mau-tri-tam--81lVsfM4gQ-unsplash.jpg",
             "label": "Feeding",
             "big_text": "",
             "heading": "Meals right on schedule",
@@ -386,7 +389,7 @@
           "settings": {
             "size": "wide",
             "style": "image",
-            "image": "shopify://shop_images/rfid-tag-pa001-nha-nhieu-thu-cung_8cdf9914-81f6-41bd-b65e-dbd8973b68dc.jpg",
+            "image": "shopify://shop_images/laura-chouette-g6Ny4dvHlE0-unsplash.jpg",
             "label": "Grooming",
             "big_text": "",
             "heading": "Less fur, <em>more cuddles</em>",
@@ -448,7 +451,7 @@
         "p1": {
           "type": "panel",
           "settings": {
-            "image": "shopify://shop_images/tui-rac-els-pet-els-1001-02_tuong_thich_orbitie.webp",
+            "image": "shopify://shop_images/diana-parkhouse-0p0lVOLdVmg-unsplash.jpg",
             "video_url": "",
             "eyebrow": "Our story",
             "title": "Built for pets. Trusted by families.",
@@ -460,7 +463,7 @@
         "p2": {
           "type": "panel",
           "settings": {
-            "image": "shopify://shop_images/pawgether-gravity-feeder-3-5l-chong-truot_1.webp",
+            "image": "shopify://shop_images/asique-alam-HaMYaR9J-Zg-unsplash.jpg",
             "video_url": "",
             "eyebrow": "Partner with us",
             "title": "Creators & media",

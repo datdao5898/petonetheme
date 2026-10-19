@@ -17,15 +17,17 @@
   <stack-cards class="spotlight-stack__list page-width">
     {%- for block in section.blocks -%}
       {%- assign b = block.settings -%}
-      <article class="spotlight spotlight--{{ b.scheme }} spotlight--text-{{ b.text_side }}" style="--i: {{ forloop.index0 }};" data-stack-card {{ block.shopify_attributes }}>
+      <article class="spotlight spotlight--{{ b.layout | default: 'split' }} spotlight--{{ b.scheme }} spotlight--text-{{ b.text_side }}" style="--i: {{ forloop.index0 }};" data-stack-card {{ block.shopify_attributes }}>
         <div class="spotlight__media">
           {%- if b.image != blank -%}
+            {%- capture desktop_focal -%}object-position: {{ b.image.presentation.focal_point }};{%- endcapture -%}
+            {%- capture mobile_focal -%}object-position: {{ b.image_mobile.presentation.focal_point }};{%- endcapture -%}
             {%- assign desktop_class = 'spotlight__img' -%}
             {%- if b.image_mobile != blank -%}
               {%- assign desktop_class = 'spotlight__img spotlight__img--desktop' -%}
-              {{ b.image_mobile | image_url: width: 1100 | image_tag: class: 'spotlight__img spotlight__img--mobile', loading: 'lazy', widths: '550, 750, 1100', sizes: '100vw' }}
+              {{ b.image_mobile | image_url: width: 1100 | image_tag: class: 'spotlight__img spotlight__img--mobile', style: mobile_focal, loading: 'lazy', widths: '550, 750, 1100', sizes: '100vw' }}
             {%- endif -%}
-            {{ b.image | image_url: width: 2400 | image_tag: class: desktop_class, loading: 'lazy', widths: '750, 1100, 1500, 1920, 2400', sizes: '(min-width: 1400px) 1360px, 100vw' }}
+            {{ b.image | image_url: width: 2400 | image_tag: class: desktop_class, style: desktop_focal, loading: 'lazy', widths: '750, 1100, 1500, 1920, 2400', sizes: '(min-width: 1400px) 1360px, 100vw' }}
           {%- else -%}
             {%- capture ph -%}lifestyle-{% cycle '1', '2' %}{%- endcapture -%}
             {{ ph | placeholder_svg_tag: 'placeholder spotlight__img' }}
@@ -80,8 +82,16 @@
       "type": "spotlight",
       "name": "Spotlight",
       "settings": [
-        { "type": "image_picker", "id": "image", "label": "Image", "info": "2400 x 1200px recommended" },
+        { "type": "image_picker", "id": "image", "label": "Image", "info": "2400 x 1200px recommended. Set a focal point on the image to keep the subject in frame." },
         { "type": "image_picker", "id": "image_mobile", "label": "Mobile image", "info": "Optional. 1100 x 1400px recommended" },
+        {
+          "type": "select", "id": "layout", "label": "Layout",
+          "options": [
+            { "value": "split", "label": "Split — text beside the image" },
+            { "value": "overlay", "label": "Overlay — text on the image" }
+          ],
+          "default": "split"
+        },
         {
           "type": "select", "id": "scheme", "label": "Color",
           "options": [

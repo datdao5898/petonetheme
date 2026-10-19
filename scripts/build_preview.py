@@ -108,7 +108,7 @@ spots = [('litter', 'dark', 'left', 'Just launched', 'Petone Smart Series', 'Sel
 spot_cards = ''
 for i, (k, sch, side, badge, kick, h, offer, c1, c2, x) in enumerate(spots):
     b1 = 'button--dark' if sch == 'accent' else 'button--accent'
-    spot_cards += (f'<article class="spotlight spotlight--{sch} spotlight--text-{side}" data-stack-card><div class="spotlight__media">{scene(k, c1, c2, x, 1.7, "spotlight__img")}</div>'
+    spot_cards += (f'<article class="spotlight spotlight--split spotlight--{sch} spotlight--text-{side}" data-stack-card><div class="spotlight__media">{scene(k, c1, c2, x, 1.7, "spotlight__img")}</div>'
                    f'<span class="spotlight__index" aria-hidden="true">0{i+1}</span><div class="spotlight__content"><span class="badge badge--accent">{badge}</span><p class="spotlight__kicker">{kick}</p>'
                    f'<h3 class="spotlight__heading">{h}</h3><p class="spotlight__offer">{offer}</p><div class="button-row"><a href="#" class="button {b1}">Shop now {icon("arrow-right")}</a>'
                    f'<a href="#" class="button spotlight__ghost">{icon("play")} Watch demo</a></div></div></article>')
